@@ -63,7 +63,7 @@ OOCSS is very scalable and is a bit of a large subject to cover so I'll refer yo
 
 I like to add comments throughout the code to highlight any confusing areas (or anything that might not be obvious - such as working around a specific browser quirk).
 
-At the top of every stylesheet I include a heading which briefly explains the purpose of the style sheet, for example…
+Also, at the top of every stylesheet I include a heading which briefly explains the purpose of the style sheet, for example…
 
 ```css
 /* =============================================================================
@@ -109,7 +109,7 @@ I don't like CSS resets.
 
 You end up writing more code to work around the lack of styling than you would have written to work around one or two browser 'quirks'.
 
-Although, I do like (and use) Nicolas Gallagher's [normalise.css](https://github.com/necolas/normalize.css) - which I've modified with a few adjustments that better suit my style.
+Although I don't like CSS resets, I do like (and use) Nicolas Gallagher's [normalise.css](https://github.com/necolas/normalize.css) - *which I've modified with a few adjustments that better suit my style*. The reason I use 'normalise.css' is because it doesn't take a 'scorched earth' approach (where it wipes out all browser styles), it simply tries to normalise certain native styles (as well as try to fix some known quirky browser bugs) 
 
 ##Browser support
 
