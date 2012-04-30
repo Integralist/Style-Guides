@@ -8,7 +8,7 @@ This isn't a 'righteous' guide. If there is anything here you don't like, then d
 
 ##Terminology
 
-```
+```css
 /* Rule (the entire chunk of code below can just be referred to as a single 'rule') */
 
 /* Selectors */
@@ -26,7 +26,7 @@ This isn't a 'righteous' guide. If there is anything here you don't like, then d
 
 ##Style
 
-```
+```css
 .m-btn {
     /* ensure prefixes line up */
 	-webkit-border-radius: 20px;
@@ -65,7 +65,7 @@ I like to add comments throughout the code to highlight any confusing areas (or 
 
 At the top of every stylesheet I include a heading which briefly explains the purpose of the style sheet, for example…
 
-```
+```css
 /* =============================================================================
    Helpers
    These helpers are a lot like modules, in that they are re-usable layout utilities
@@ -117,7 +117,7 @@ I write my CSS to work with [Mozilla Firefox](www.mozilla.org/en-US/firefox/).
 
 If WebKit browsers (such as Apple Safari or Google Chrome) need any additional tweaks (which is rare but does happen), then I use a webkit hack to target those browsers… 
 
-```
+```css
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     /* WebKit rules */
 }
@@ -131,7 +131,7 @@ I'm still trying to find the right balance between maintainability and bloat.
 
 At the moment I'm using IE's `conditional comments` to load IE specific style sheets… 
 
-```
+```html
 <! --[if IE]>
 <link rel="stylesheet" href="Assets/Styles/IE.css" />
 <![endif]-->
