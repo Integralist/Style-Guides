@@ -38,7 +38,7 @@ I like to lowercase all elements and attributes (it just looks so much neater).
 
 I like indenting main 'sections', for example… 
 
-```
+```html
 <html>
     <head>
         <meta>
@@ -71,7 +71,7 @@ To work around some of the quirks in IE's rendering I use Microsoft's Conditiona
 
 Here are some Examples of how you can use these conditionals… 
 
-```
+```html
 <! --[if lte IE 9]>
 <link rel="stylesheet" href="Assets/Styles/OLD-IE.css">
 <![endif]-->
@@ -79,7 +79,7 @@ Here are some Examples of how you can use these conditionals…
 
 or
 
-```
+```html
 <! --[if IE 8]>
 <link rel="stylesheet" href="Assets/Styles/IE8.css">
 <![endif]-->
@@ -93,7 +93,7 @@ or
 
 Here follows is a basic boilerplate of an HTML page I normally start out with… 
 
-```
+```html
 <!doctype html>
 <! --[if IE]><![endif]--><!-- Explanation: http://www.phpied.com/conditional-comments-block-downloads/ -->
 <html lang="en" dir="ltr">
