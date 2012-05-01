@@ -133,3 +133,5 @@ Here follows is a basic boilerplate of an HTML page I normally start out with…
 	</body>
 </html>
 ```
+
+…one thing to point out is the `<meta name="viewport">` element. In the above example I have set `user-scalable=0` which effectively means (don't allow the user to zoom). Now I don't advise using that unless you have a really good reason to. The only time I've ever had to disable zooming is when building a touch based HTML5 Canvas game. I've kept it in the above example, but just be aware that that particular setting isn't necessary majority of the time.
