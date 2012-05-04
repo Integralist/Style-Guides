@@ -52,7 +52,7 @@ Term                  | Example
 * Use four spaces to represent a single tab
 	* The reason for this is to help alignment of multiple variables with a single var declaration…  
 	
-	```
+	```js
 	var name = "Mark",
 		location = "England";
 	```
@@ -63,7 +63,7 @@ Term                  | Example
 * Supporting functions
 * Code
 
-```
+```js
 function myFunction(){
 	var name = "Mark",
 		location = "England";
@@ -80,7 +80,7 @@ function myFunction(){
 
 I don't like using `for` loops for no other reason than I think they're ugly and harsher on the eyes than a `while` loop (besides, there are some micro-optimisations that can be had from using a `while` loop)… 
 
-```
+```js
 // Bad
 var arr = ["a", "b", "c"];
 for (var i = 0, len = arr.length; i < len; i++) {
@@ -98,7 +98,7 @@ while (len--) {
 
 …and if you're worrying about your `while` loop going backwards, you can still go forwards and have it look cleaner than the `for` loop (IMO)…
 
-```
+```js
 var arr = ["a", "b", "c"],
 	len = arr.length,
 	counter = 0;
@@ -114,7 +114,7 @@ while (counter < len) {
 
 I use the ternary operator `?:` for only short if/else statements.
 
-```
+```js
 // Bad
 if (condition) {
 	// do something when condition is true
@@ -130,7 +130,7 @@ if (condition) {
 
 My style of spacing is a little more complicated than others because it changes depending on the context… 
 
-```
+```js
 // No arguments: no space around parenthesis
 
 function myFunction(){
@@ -162,7 +162,7 @@ for (condition) {
 
 …also, if a function is quite long I find it clearer to have a space inside of the brackets… 
 
-```
+```js
 // This is a function taken from Underscore.js
 function bind (func, context) {
 	
@@ -210,7 +210,7 @@ The only exception is when I'm checking the result from the `typeof` operator, a
 
 I define long names using an underscore as I find it easier to read… 
 
-```
+```js
 var user_location = "England";
 
 function get_user_location(){
@@ -230,7 +230,7 @@ Whenever you're working with asynchronous code, consider the use of [Promises](h
 
 My library of choice is [When.js](https://github.com/cujojs/when). It makes it a lot easy to manage asynchronous operations:
 
-```
+```js
 define(["when", "swfobject", "async!http://gdata.youtube.com/feeds/api/videos?author=xxxx&alt=json"], function (when, swf, videos) {
 
 	var global = (function(){return this;}()),
@@ -291,7 +291,7 @@ I don't like touching the DOM that much as it can be a real performance overhead
 
 For example, if I create an element `var div = document.createElement("div")` then if I need another `div` element then I'll re-use that previous variable `var new_div = div.cloneNode();` and if I'm referencing a property such as `document` more than twice then I'll store it in a variable… 
 
-```
+```js
 var doc = document,
 	element_a = doc.getElementById("testA"),
 	element_b = doc.getElementById("testB"),
@@ -300,7 +300,7 @@ var doc = document,
 
 When adding style settings to an element I'll use a `class` instead… 
 
-```
+```js
 var element = doc.getElementById("test");
 	
 // Bad
@@ -313,7 +313,7 @@ element.className = "style_a";
 
 …and in a separate CSS we have… 
 
-```
+```css
 .style_a {
 	border: 1px solid red;
 	background-color: yellow;
@@ -324,7 +324,7 @@ element.className = "style_a";
 
 I write my JavaScript to be AMD compatible which means having multiple scripts written like 'modules' which you call into your main script when needed… 
 
-```
+```js
 require(["module_a", "module_b", "module_c"], function (a, b, c) {
 	// do something with the returned values from each module
 });
@@ -332,7 +332,7 @@ require(["module_a", "module_b", "module_c"], function (a, b, c) {
 
 …and a module is written like so… 
 
-```
+```js
 define(["module_d"], function (d) {
 
 	// do something with module 'd' 
@@ -343,7 +343,7 @@ define(["module_d"], function (d) {
 
 If you don't like using AMD then you can get away with using an anonymous function to protect the global environment from stray variables and other settings… 
 
-```
+```js
 (function (global) {
 	
 	// code
@@ -391,7 +391,7 @@ Some of the items I ignore are:
 
 My configuration file for JSHint is as follows… 
 
-```
+```js
 {
 	// Settings
     "passfail"      : false,  // Stop on first error.
@@ -516,7 +516,7 @@ One performance trick I like to do is to caching (I try to cache whenever I can)
 
 One way to cache results of a heavy computation is through memoization. One thing to remember is that the memoization technique doesn't have to be used for just 'heavy computations', it can be used in any instance where you want to save the JavaScript engine from having to do extra work unnecessarily. The following example demonstrates this… 
 
-```
+```js
 /**
  * The following method creates a new element or returns a copy of an element already created by this script.
  *
@@ -570,7 +570,7 @@ Some of interest…
 
 Another testing tool is called [Testling](http://testling.com/) which is a command line tool and lets you test your code against a suite of browsers without needing to have them installed (it tests them remotely). Testling can be used as follows… 
 
-```
+```js
 /*
 Create account with http://browserling.com/
 Run tests via http://testling.com/
