@@ -355,7 +355,7 @@ If you don't like using AMD then you can get away with using an anonymous functi
 
 ##Application structure
 
-Having a clear and easy to undestand directory architecture is important. I don't like having all my JavaScript files dumped inside a single folder, I prefer have a defined structure for my applications.
+Having a clear and easy to undestand directory architecture is important. I don't like having all my JavaScript files dumped inside a single folder, I prefer having a defined structure for my applications.
 
 The following is an example: 
 
