@@ -160,7 +160,7 @@ for (condition) {
 }
 ```
 
-…also, if a function is quite long I find it clearer to have a space before and after the brackets… 
+…also, if a function is quite long I find it clearer to have a space inside of the brackets… 
 
 ```
 // This is a function taken from Underscore.js
