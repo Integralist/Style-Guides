@@ -543,7 +543,7 @@ For testing performance I highly recommend you use the online tool [jsPerf](http
 
 ##Unit testing
 
-Testing your code is very important and we should all do it. Personally, even though I know how important it is, I still don't write tests very often (*I work in an environment where code needs to be written fast and so time spent desiging and building out an API just isn't feasible*).
+Testing your code is very important and we should all do it. Personally, even though I know how important it is, I still don't write tests very often (*I work in an environment where code needs to be written fast and so time spent designing and building out an API just isn't feasible*).
 
 That being said I do try whenever possible (e.g. when working on personal projects to unit test - or better yet practice TDD - my code).
 
