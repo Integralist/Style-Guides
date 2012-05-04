@@ -128,7 +128,7 @@ if (condition) {
 
 ###Spacing
 
-My style of spacing is a littel more complicated than others because it changes depending on the context… 
+My style of spacing is a little more complicated than others because it changes depending on the context… 
 
 ```
 // No arguments: no space around parenthesis
