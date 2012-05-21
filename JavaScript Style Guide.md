@@ -55,7 +55,7 @@ Term                  | Example
 	
 	```js
 	var name = "Mark",
-		location = "England";
+	    location = "England";
 	```
 
 ###Code structure
