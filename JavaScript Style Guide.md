@@ -21,6 +21,7 @@ Here is what we'll cover:
 	* Naming Conventions
 	* Returning a value
 * DOM (Document Object Model)
+* Templating
 * Modular
 * Application structure
 * Linting
@@ -318,6 +319,44 @@ element.className = "style_a";
 	border: 1px solid red;
 	background-color: yellow;
 }
+```
+
+##Templating
+
+JavaScript templating is related to the DOM in that it allows you to insert dynamic data into HTML much more easily and cleanly.
+
+Normally you would use JavaScript to locate HTML in your page and then update and display the content (note: you could also be creating HTML using `innerHTML` or via the DOM API). But this means that you now have HTML being written inside your JavaScript which goes against the tenet of "separating your concerns". 
+
+Instead you should have any modules(HTML) within your page/web application that will be dynamically updated placed inside separate template files which you load into memory using AJAX and then process the templates by passing in the relevant data and once rendered you can insert the template into the DOM.
+
+There are many templating libraries available but I prefer to use [Hogan.js](http://twitter.github.com/hogan.js/) which is modelled from [Mustache](https://github.com/janl/mustache.js#readme).
+
+Here follows is an example of a template and how to render it using Hogan… 
+
+```html
+<div>
+	<p>{{title}}</p>
+</div>
+```
+
+```js
+ajax({
+	url: "Assets/Templates/Video.tpl",
+	data: "html",
+	onSuccess: function (data) {
+		var template = hogan.compile(data),
+			content = template.render({ 
+				title: "My Title" 
+			});
+			
+		var frag = doc.createDocumentFragment(),
+			div = doc.createElement("div");
+		
+		div.innerHTML = content;
+		frag.appendChild(div);
+		container.insertBefore(frag, target);
+	}
+});
 ```
 
 ##Modular
