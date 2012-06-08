@@ -48,14 +48,15 @@ Term                  | Example
 ###Basics
 
 * Always use semicolons (controversial nowadays) - do not rely on the JavaScript engine to handle ASI ('*Automatic Semicolon Insertion*').
-* Use double quotes `""` instead of single quotes `''` (in a string you're more likely to need to escape a `"` than `'`).
+* Use single quotes `''` instead of double quotes `""` as they look cleaner/clearer when scaning code (the exception to this rule is when you're adding a string of text, as you're more likely to need to escape a `"` than `'` -  
+e.g `"I'm stuck here until they're finished working"`).
 * Never mix spaces and tabs.
 * Use four spaces to represent a single tab
 	* The reason for this is to help alignment of multiple variables with a single var declaration…  
 	
 	```js
-	var name = "Mark",
-	    location = "England";
+	var name = 'Mark',
+	    location = 'England';
 	```
 
 ###Code structure
@@ -66,8 +67,8 @@ Term                  | Example
 
 ```js
 function myFunction(){
-	var name = "Mark",
-		location = "England";
+	var name = 'Mark',
+		location = 'England';
 		
 	function doSomething (withThis) {
 		// do something
@@ -83,13 +84,13 @@ I don't like using `for` loops for no other reason than I think they're ugly and
 
 ```js
 // Bad
-var arr = ["a", "b", "c"];
+var arr = ['a', 'b', 'c'];
 for (var i = 0, len = arr.length; i < len; i++) {
 	// do something
 }
 
 // Good
-var arr = ["a", "b", "c"],
+var arr = ['a', 'b', 'c'],
 	len = arr.length;
 	
 while (len--) {
@@ -100,7 +101,7 @@ while (len--) {
 …and if you're worrying about your `while` loop going backwards, you can still go forwards and have it look cleaner than the `for` loop (IMO)…
 
 ```js
-var arr = ["a", "b", "c"],
+var arr = ['a', 'b', 'c'],
 	len = arr.length,
 	counter = 0;
 	
@@ -212,7 +213,7 @@ The only exception is when I'm checking the result from the `typeof` operator, a
 I define long names using an underscore as I find it easier to read… 
 
 ```js
-var user_location = "England";
+var user_location = 'England';
 
 function get_user_location(){
 	// code
@@ -232,20 +233,20 @@ Whenever you're working with asynchronous code, consider the use of [Promises](h
 My library of choice is [When.js](https://github.com/cujojs/when). It makes it a lot easy to manage asynchronous operations:
 
 ```js
-define(["when", "swfobject", "async!http://gdata.youtube.com/feeds/api/videos?author=xxxx&alt=json"], function (when, swf, videos) {
+define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?author=xxxx&alt=json'], function (when, swf, videos) {
 
 	var global = (function(){return this;}()),
 		doc = document,
 		params, 
 		atts, 
-		id = videos.feed.entry[0].id.$t.split("videos/")[1],
-		flash = doc.createElement("div"),
-		container = doc.getElementsByTagName("div")[2];
+		id = videos.feed.entry[0].id.$t.split('videos/')[1],
+		flash = doc.createElement('div'),
+		container = doc.getElementsByTagName('div')[2];
 
 	function async (template) {
 		var dfd = when.defer(),
 			tmp = template({ 
-				title: "Flash content inserted via JavaScript using a template to render content"
+				title: 'Flash content inserted via JavaScript using a template to render content'
 			}),
 			timer;
 		
@@ -261,26 +262,26 @@ define(["when", "swfobject", "async!http://gdata.youtube.com/feeds/api/videos?au
 	}
 		
 	function handler(){
-        require(["tpl!../Templates/Video.tpl"], function (template) {
+        require(['tpl!../Templates/Video.tpl'], function (template) {
 			
 			when(async(template), function (htmlFragment) {
 				var frag = doc.createDocumentFragment(),
-					div = doc.createElement("div");
+					div = doc.createElement('div');
 				
 				div.innerHTML = htmlFragment;
 				frag.appendChild(div);
-				container.insertBefore(frag, doc.getElementById("currentvideo"));
+				container.insertBefore(frag, doc.getElementById('currentvideo'));
             });
             
         });
 	}
 	
-	flash.id = "insertflash";
-	atts = { id: "currentvideo" };
+	flash.id = 'insertflash';
+	atts = { id: 'currentvideo' };
 	
 	container.appendChild(flash);
 	
-	swf.embedSWF("http://www.youtube.com/v/" + id + "?enablejsapi=1&playerapiid=ytplayer&version=3", "insertflash", "270", "150", "8", null, null, null, atts, handler);
+	swf.embedSWF('http://www.youtube.com/v/' + id + '?enablejsapi=1&playerapiid=ytplayer&version=3', 'insertflash', '270', '150', '8', null, null, null, atts, handler);
 	
 });
 ```
@@ -290,26 +291,26 @@ define(["when", "swfobject", "async!http://gdata.youtube.com/feeds/api/videos?au
 
 I don't like touching the DOM that much as it can be a real performance overhead, so I will cache DOM elements and properties/values and re-use elements wherever possible.
 
-For example, if I create an element `var div = document.createElement("div")` then if I need another `div` element then I'll re-use that previous variable `var new_div = div.cloneNode();` and if I'm referencing a property such as `document` more than twice then I'll store it in a variable… 
+For example, if I create an element `var div = document.createElement('div')` then if I need another `div` element then I'll re-use that previous variable `var new_div = div.cloneNode();` and if I'm referencing a property such as `document` more than twice then I'll store it in a variable… 
 
 ```js
 var doc = document,
-	element_a = doc.getElementById("testA"),
-	element_b = doc.getElementById("testB"),
-	divs = doc.getElementsByTagName("div");
+	element_a = doc.getElementById('testA'),
+	element_b = doc.getElementById('testB'),
+	divs = doc.getElementsByTagName('div');
 ```
 
 When adding style settings to an element I'll use a `class` instead… 
 
 ```js
-var element = doc.getElementById("test");
+var element = doc.getElementById('test');
 	
 // Bad
-element.style.border = "1px solid red";
-element.style.backgroundColor = "yellow";
+element.style.border = '1px solid red';
+element.style.backgroundColor = 'yellow';
 
 // Good
-element.className = "style_a";
+element.className = 'style_a';
 ```
 
 …and in a separate CSS we have… 
@@ -325,7 +326,7 @@ element.className = "style_a";
 
 JavaScript templating is related to the DOM in that it allows you to insert dynamic data into HTML much more easily and cleanly.
 
-Normally you would use JavaScript to locate HTML in your page and then update and display the content (note: you could also be creating HTML using `innerHTML` or via the DOM API). But this means that you now have HTML being written inside your JavaScript which goes against the tenet of "separating your concerns". 
+Normally you would use JavaScript to locate HTML in your page and then update and display the content (note: you could also be creating HTML using `innerHTML` or via the DOM API). But this means that you now have HTML being written inside your JavaScript which goes against the tenet of 'separating your concerns'. 
 
 Instead you should have any modules(HTML) within your page/web application that will be dynamically updated placed inside separate template files which you load into memory using AJAX and then process the templates by passing in the relevant data and once rendered you can insert the template into the DOM.
 
@@ -341,16 +342,16 @@ Here follows is an example of a template and how to render it using Hogan…
 
 ```js
 ajax({
-	url: "Assets/Templates/Video.tpl",
-	data: "html",
+	url: 'Assets/Templates/Video.tpl',
+	data: 'html',
 	onSuccess: function (data) {
 		var template = hogan.compile(data),
 			content = template.render({ 
-				title: "My Title" 
+				title: 'My Title' 
 			});
 			
 		var frag = doc.createDocumentFragment(),
-			div = doc.createElement("div");
+			div = doc.createElement('div');
 		
 		div.innerHTML = content;
 		frag.appendChild(div);
@@ -364,7 +365,7 @@ ajax({
 I write my JavaScript to be AMD compatible which means having multiple scripts written like 'modules' which you call into your main script when needed… 
 
 ```js
-require(["module_a", "module_b", "module_c"], function (a, b, c) {
+require(['module_a', 'module_b', 'module_c'], function (a, b, c) {
 	// do something with the returned values from each module
 });
 ```
@@ -372,7 +373,7 @@ require(["module_a", "module_b", "module_c"], function (a, b, c) {
 …and a module is written like so… 
 
 ```js
-define(["module_d"], function (d) {
+define(['module_d'], function (d) {
 
 	// do something with module 'd' 
 	// optionally return a value/object/function etc
@@ -433,84 +434,84 @@ My configuration file for JSHint is as follows…
 ```js
 {
 	// Settings
-    "passfail"      : false,  // Stop on first error.
-    "maxerr"        : 200,    // Maximum error before stopping.
+    'passfail'      : false,  // Stop on first error.
+    'maxerr'        : 200,    // Maximum error before stopping.
 
 
     // Predefined globals whom JSHint will ignore.
-    "browser"       : true,   // Standard browser globals e.g. `window`, `document`.
+    'browser'       : true,   // Standard browser globals e.g. `window`, `document`.
 
-    "node"          : false,
-    "rhino"         : false,
-    "couch"         : false,
-    "wsh"           : false,   // Windows Scripting Host.
+    'node'          : false,
+    'rhino'         : false,
+    'couch'         : false,
+    'wsh'           : false,   // Windows Scripting Host.
 
-    "jquery"        : true,
-    "prototypejs"   : false,
-    "mootools"      : false,
-    "dojo"          : false,
+    'jquery'        : true,
+    'prototypejs'   : false,
+    'mootools'      : false,
+    'dojo'          : false,
 
-    "predef"        : [  // Custom globals.
+    'predef'        : [  // Custom globals.
     	// this is because we use require() from RequireJS library
-        "require",
-        "define",
+        'require',
+        'define',
         
         // this is because we use Jasmine BDD for unit-testing
-        "jasmine",
-        "describe",
-        "beforeEach",
-        "afterEach",
-        "it",
-        "expect"
+        'jasmine',
+        'describe',
+        'beforeEach',
+        'afterEach',
+        'it',
+        'expect'
     ],
 
 
     // Development.
-    "debug"         : false,  // Allow debugger statements e.g. browser breakpoints.
-    "devel"         : false,  // Allow developments statements e.g. `console.log();`.
+    'debug'         : false,  // Allow debugger statements e.g. browser breakpoints.
+    'devel'         : false,  // Allow developments statements e.g. `console.log();`.
 
 
     // ECMAScript 5.
-    "es5"           : true,   // Allow ECMAScript 5 syntax.
-    "strict"        : false,  // Require `use strict` pragma  in every file.
-    "globalstrict"  : false,  // Allow global "use strict" (also enables 'strict').
+    'es5'           : true,   // Allow ECMAScript 5 syntax.
+    'strict'        : false,  // Require `use strict` pragma  in every file.
+    'globalstrict'  : false,  // Allow global 'use strict' (also enables 'strict').
 
 
     // The Good Parts.
-    "asi"           : false,  // Tolerate Automatic Semicolon Insertion (no semicolons).
-    "laxbreak"      : true,   // Tolerate unsafe line breaks e.g. `return [\n] x` without semicolons.
-    "bitwise"       : true,   // Prohibit bitwise operators (&, |, ^, etc.).
-    "boss"          : true,   // Tolerate assignments inside if, for & while. Usually conditions & loops are for comparison, not assignments.
-    "curly"         : true,   // Require {} for every new block or scope.
-    "eqeqeq"        : true,   // Require triple equals i.e. `===`.
-    "eqnull"        : false,  // Tolerate use of `== null`.
-    "evil"          : false,  // Tolerate use of `eval`.
-    "expr"          : false,  // Tolerate `ExpressionStatement` as Programs.
-    "forin"         : false,  // Tolerate `for in` loops without `hasOwnPrototype`.
-    "immed"         : true,   // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
-    "latedef"       : true,   // Prohipit variable use before definition.
-    "loopfunc"      : false,  // Allow functions to be defined within loops.
-    "noarg"         : true,   // Prohibit use of `arguments.caller` and `arguments.callee`.
-    "regexp"        : false,  // Prohibit `.` and `[^...]` in regular expressions.
-    "regexdash"     : false,  // Tolerate unescaped last dash i.e. `[-...]`.
-    "scripturl"     : true,   // Tolerate script-targeted URLs.
-    "shadow"        : true,   // Allows re-define variables later in code e.g. `var x=1; x=2;`.
-    "supernew"      : false,  // Tolerate `new function () { ... };` and `new Object;`.
-    "undef"         : true,   // Require all non-global variables be declared before they are used.
+    'asi'           : false,  // Tolerate Automatic Semicolon Insertion (no semicolons).
+    'laxbreak'      : true,   // Tolerate unsafe line breaks e.g. `return [\n] x` without semicolons.
+    'bitwise'       : true,   // Prohibit bitwise operators (&, |, ^, etc.).
+    'boss'          : true,   // Tolerate assignments inside if, for & while. Usually conditions & loops are for comparison, not assignments.
+    'curly'         : true,   // Require {} for every new block or scope.
+    'eqeqeq'        : true,   // Require triple equals i.e. `===`.
+    'eqnull'        : false,  // Tolerate use of `== null`.
+    'evil'          : false,  // Tolerate use of `eval`.
+    'expr'          : false,  // Tolerate `ExpressionStatement` as Programs.
+    'forin'         : false,  // Tolerate `for in` loops without `hasOwnPrototype`.
+    'immed'         : true,   // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
+    'latedef'       : true,   // Prohipit variable use before definition.
+    'loopfunc'      : false,  // Allow functions to be defined within loops.
+    'noarg'         : true,   // Prohibit use of `arguments.caller` and `arguments.callee`.
+    'regexp'        : false,  // Prohibit `.` and `[^...]` in regular expressions.
+    'regexdash'     : false,  // Tolerate unescaped last dash i.e. `[-...]`.
+    'scripturl'     : true,   // Tolerate script-targeted URLs.
+    'shadow'        : true,   // Allows re-define variables later in code e.g. `var x=1; x=2;`.
+    'supernew'      : false,  // Tolerate `new function () { ... };` and `new Object;`.
+    'undef'         : true,   // Require all non-global variables be declared before they are used.
 
 
     // Personal styling preferences.
-    "newcap"        : true,   // Require capitalization of all constructor functions e.g. `new F()`.
-    "noempty"       : true,   // Prohibit use of empty blocks.
-    "nonew"         : true,   // Prohibit use of constructors for side-effects.
-    "nomen"         : true,   // Prohibit use of initial or trailing underbars in names.
-    "onevar"        : false,  // Allow only one `var` statement per function.
-    "plusplus"      : false,  // Prohibit use of `++` & `--`.
-    "sub"           : false,  // Tolerate all forms of subscript notation besides dot notation e.g. `dict['key']` instead of `dict.key`.
-    "trailing"      : false,  // Prohibit trailing whitespaces.
-    "white"         : true,   // Check against strict whitespace and indentation rules.
-    "indent"        : 4,      // Specify indentation spacing
-    "smarttabs"		: true	  // Suppress warnings about mixed tabs and spaces
+    'newcap'        : true,   // Require capitalization of all constructor functions e.g. `new F()`.
+    'noempty'       : true,   // Prohibit use of empty blocks.
+    'nonew'         : true,   // Prohibit use of constructors for side-effects.
+    'nomen'         : true,   // Prohibit use of initial or trailing underbars in names.
+    'onevar'        : false,  // Allow only one `var` statement per function.
+    'plusplus'      : false,  // Prohibit use of `++` & `--`.
+    'sub'           : false,  // Tolerate all forms of subscript notation besides dot notation e.g. `dict['key']` instead of `dict.key`.
+    'trailing'      : false,  // Prohibit trailing whitespaces.
+    'white'         : true,   // Check against strict whitespace and indentation rules.
+    'indent'        : 4,      // Specify indentation spacing
+    'smarttabs'		: true	  // Suppress warnings about mixed tabs and spaces
 }
 ```
 
