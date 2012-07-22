@@ -55,9 +55,8 @@ I like to keep my `<head>` section in the following order…
 2. Any required scripts (e.g. [Modernizr](http://modernizr.com/) or the [HTML5 Shiv](https://github.com/aFarkas/html5shiv))
 3. `<title>` element
 4. Style sheets
-5. Internet Explorer Conditional Comments
 
-I also like to ensure the DOM is as small and efficient as possible. I know the semantics of sections/elements are important but I really hate the idea of wrapping a `<ul>` which is used for my main navigation in a `<nav>` element. I prefer to just use `<ul class="m-nav">` to represent a `<ul>` that is a navigation module.
+I also like to ensure the DOM is as small and efficient as possible. I know the semantics of sections/elements are important but I really hate the idea of wrapping a `<ul>` which is used for my main navigation in a `<nav>` element. I prefer to just use `<ul class="nav">` to represent a `<ul>` that is a navigation module.
 
 Something else I like to do with HTML (which isn't strictly speaking 'HTML' but does relate somewhat) is to flush the content buffer to the browser as soon as possible. To do this I use a server-side language (in my case PHP) to flush the content manually. So what this means is throughout my HTML, at key points (and by 'key points' I mean any where there is a large chunk of HTML - e.g. a `<section>` or `<article>`) I'll stick in `<?php flush(); ?>`. This helps with a user's *perceived performance* of the page loading, because while the page is loading the server pushes content to the browser as quickly as possible rather than waiting for all the content to be loaded before sending it to the browser.
 
@@ -67,27 +66,27 @@ I don't like using comments at the end of elements. I understand the principle b
 
 ##Internet Explorer
 
-To work around some of the quirks in IE's rendering I use Microsoft's Conditional Comments to load in additional style sheets just for IE.
-
-Here are some Examples of how you can use these conditionals… 
+To work around some of the quirks in IE's rendering I no longer use Microsoft's Conditional Comments to load in additional style sheets just for IE, like the following...
 
 ```html
-<! --[if lte IE 9]>
-<link rel="stylesheet" href="Assets/Styles/OLD-IE.css">
+<!--[if IE 8]>
+<link rel="stylesheet" href="/Assets/Styles/IE8.css">
+<![endif]-->
+
+<!--[if IE 7]>
+<link rel="stylesheet" href="/Assets/Styles/IE7.css">
 <![endif]-->
 ```
 
-or
+...I instead use [Paul Irish's solution](http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/)…
 
 ```html
-<! --[if IE 8]>
-<link rel="stylesheet" href="Assets/Styles/IE8.css">
-<![endif]-->
-
-<! --[if IE 7]>
-<link rel="stylesheet" href="Assets/Styles/IE7.css">
-<![endif]-->
+<!--[if IE 8]><html class="ie8" dir="ltr" lang="en"><![endif]-->
+<!--[if IE 9]><html class="ie9" dir="ltr" lang="en"><![endif]-->
+<!--[if gt IE 9]><!--> <html dir="ltr" lang="en"> <!--<![endif]-->
 ```
+
+...this helps me keep my CSS modules together and more easily maintainable.
 
 ##Example
 
@@ -95,43 +94,70 @@ Here follows is a basic boilerplate of an HTML page I normally start out with…
 
 ```html
 <!doctype html>
-<! --[if IE]><![endif]--><!-- Explanation: http://www.phpied.com/conditional-comments-block-downloads/ -->
-<html lang="en" dir="ltr">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    	<meta name="description" content="" />
-    	<meta name="author" content="" />
-		<!--[if lt IE 9]>
-		<script src="Assets/Scripts/html5.js"></script>
-		<![endif]-->
-		<title>Mobile First (Desktop Second)</title>
-		<link rel="author" href="humans.txt" type="text/plain">
-		<link rel="stylesheet" href="Assets/Styles/base.css">
-		<link rel="stylesheet" href="Assets/Styles/mobile.css"  media="only screen and (min-width: 320px)">
-        <link rel="stylesheet" href="Assets/Styles/tablet.css"  media="only screen and (min-width: 480px) and (max-width: 959px)">
+<!--[if IE 8]><html class="ie8" dir="ltr" lang="en"><![endif]-->
+<!--[if IE 9]><html class="ie9" dir="ltr" lang="en"><![endif]-->
+<!--[if gt IE 9]><!--> <html dir="ltr" lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="" />
+        <title></title>
+        <?php require 'Assets/Includes/google-analytics.php'; ?>
+        <?php require 'Assets/Includes/head.php'; ?>
+        <link rel="stylesheet" href="Assets/Styles/mobile.css"  media="only screen and (min-width: 320px)">
+        <link rel="stylesheet" href="Assets/Styles/tablet.css"  media="only screen and (min-width: 600px) and (max-width: 959px)">
         <link rel="stylesheet" href="Assets/Styles/desktop.css" media="only screen and (min-width: 960px)">
-		<!--[if lt IE 9]>
-			<link rel="stylesheet" href="Assets/Styles/desktop.css">
-		<![endif]-->
-	</head>
-	<body>
-        <div class="l-container">
-            <h1>Main Header</h1>
-            <h2>Secondary Header</h2>
-            <p>Below is a numbered list displaying some code related to known screen dimensions</p>
-            <ol>
-                <li>mobile <code>(min-width:320px)</code></li>
-                <li>tablet <code>(min-width:480px) and (max-width:959px)</code></li>
-                <li>desktop <code>(min-width:960px)</code></li>
-            </ol>
-    		<blockquote>
-    			<p>Some mobile browsers, notably Safari iPhone, have a default layout viewport of around 850 to 1000 pixels — much larger than the device width. (Why? In order to accomodate desktop sites whose developers did not test on mobile. Such sites usually stretch to roughly that width.)</p>
-    		</blockquote>
-        </div>
-		<script src="Assets/Scripts/mobile.js"></script>
-	</body>
+        <!--[if (lt IE 9) & (!IEMobile)]>
+        <link rel="stylesheet" href="/Assets/Styles/desktop.css">
+        <![endif]-->
+    </head>
+    <body>
+        <?php require 'Assets/Includes/internet-explorer.php'; ?>
+        
+        <script data-main="Assets/Scripts/App/main" src="Assets/Scripts/require.js"></script>
+    </body>
 </html>
 ```
 
-…one thing to point out is the `<meta name="viewport">` element. In the above example I have set `user-scalable=0` which effectively means (don't allow the user to zoom). Now I don't advise using that unless you have a really good reason to. The only time I've ever had to disable zooming is when building a touch based HTML5 Canvas game. I've kept it in the above example, but just be aware that that particular setting isn't necessary majority of the time.
+...the PHP `require`'d files just make it a cleaner foundation to work from...
+
+```html
+<!-- google-analytics.php -->
+<script>
+    // Because Google Analytics is loaded asynchronously it's OK to insert it at the top of the page
+    // All other JavaScript should be loaded at the bottom of the page though.
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['_trackPageLoadTime']);
+    
+    (function(){
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    }());
+</script>
+```
+
+```html
+<!-- head.php -->
+<!--[if lt IE 9]>
+<script src="/Assets/Scripts/Utils/Elements/html5.js"></script>
+<![endif]-->
+<link rel="author" href="/humans.txt" type="text/plain">
+```
+
+```html
+<!-- internet-explorer.php -->
+<!--[if lte IE 7]>
+    <link rel="stylesheet" media="screen" href="/Assets/Styles/IE_notification.css" />
+    <div id="ie-container"></div>
+    <div id="ie-message">
+    	<a href="/internet-explorer/">
+    		<span>Internet Explorer 6/7</span>
+    		<img src="/Assets/Images/Browser-Warning-Message.png">
+    	</a>
+    </div>
+<![endif]-->
+
+```
