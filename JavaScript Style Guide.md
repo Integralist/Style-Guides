@@ -233,11 +233,10 @@ define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?au
 
 	var global = (function(){return this;}());
 	var doc = document;
-	var params;
-	var atts;
 	var id = videos.feed.entry[0].id.$t.split('videos/')[1];
 	var flash = doc.createElement('div');
 	var container = doc.getElementsByTagName('div')[2];
+	var params, atts;
 
 	function async (template) {
 		var dfd = when.defer();
