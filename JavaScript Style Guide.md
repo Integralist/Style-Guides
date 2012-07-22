@@ -51,13 +51,9 @@ Term                  | Example
 * Use single quotes `''` instead of double quotes `""` as they look cleaner/clearer when scaning code (the exception to this rule is when you're adding a string of text, as you're more likely to need to escape a `"` than `'` -  
 e.g `"I'm stuck here until they're finished working"`).
 * Never mix spaces and tabs.
-* Use four spaces to represent a single tab
-	* The reason for this is to help alignment of multiple variables with a single var declaration…  
-	
-	```js
-	var name = 'Mark',
-	    location = 'England';
-	```
+* Use four spaces to represent a single tab.
+* Use multiple var statements (not one var statement for multiple variables - let your minifier/build script handle that for you)
+	* With the exception for variables have no value: `var name, age, location;` and should come last in the list of variables.
 
 ###Code structure
 
@@ -67,8 +63,8 @@ e.g `"I'm stuck here until they're finished working"`).
 
 ```js
 function myFunction(){
-	var name = 'Mark',
-		location = 'England';
+	var name = 'Mark';
+	var location = 'England';
 		
 	function doSomething (withThis) {
 		// do something
@@ -90,8 +86,8 @@ for (var i = 0, len = arr.length; i < len; i++) {
 }
 
 // Good
-var arr = ['a', 'b', 'c'],
-	len = arr.length;
+var arr = ['a', 'b', 'c'];
+var len = arr.length;
 	
 while (len--) {
 	// do something
@@ -101,9 +97,9 @@ while (len--) {
 …and if you're worrying about your `while` loop going backwards, you can still go forwards and have it look cleaner than the `for` loop (IMO)…
 
 ```js
-var arr = ['a', 'b', 'c'],
-	len = arr.length,
-	counter = 0;
+var arr = ['a', 'b', 'c'];
+var len = arr.length;
+var counter = 0;
 	
 while (counter < len) {
 	// do something
@@ -188,8 +184,8 @@ function bind (func, context) {
 		
 		ctor.prototype = func.prototype;
 		
-		var self = new ctor,
-			result = func.apply(self, args.concat(slice.call(arguments)));
+		var self = new ctor;
+		var result = func.apply(self, args.concat(slice.call(arguments)));
 		
 		if (Object(result) === result) {
 			return result;
@@ -235,20 +231,21 @@ My library of choice is [When.js](https://github.com/cujojs/when). It makes it a
 ```js
 define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?author=xxxx&alt=json'], function (when, swf, videos) {
 
-	var global = (function(){return this;}()),
-		doc = document,
-		params, 
-		atts, 
-		id = videos.feed.entry[0].id.$t.split('videos/')[1],
-		flash = doc.createElement('div'),
-		container = doc.getElementsByTagName('div')[2];
+	var global = (function(){return this;}());
+	var doc = document;
+	var params;
+	var atts;
+	var id = videos.feed.entry[0].id.$t.split('videos/')[1];
+	var flash = doc.createElement('div');
+	var container = doc.getElementsByTagName('div')[2];
 
 	function async (template) {
-		var dfd = when.defer(),
-			tmp = template({ 
-				title: 'Flash content inserted via JavaScript using a template to render content'
-			}),
-			timer;
+		var dfd = when.defer();
+		var tmp, timer;
+		
+		template({ 
+			title: 'Flash content inserted via JavaScript using a template to render content'
+		}),
 		
 		// Because template() function is asynchronous (and no callback built-in)
 		// we use a timer to keep track of 'tmp' value
@@ -265,8 +262,8 @@ define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?au
         require(['tpl!../Templates/Video.tpl'], function (template) {
 			
 			when(async(template), function (htmlFragment) {
-				var frag = doc.createDocumentFragment(),
-					div = doc.createElement('div');
+				var frag = doc.createDocumentFragment();
+				var div = doc.createElement('div');
 				
 				div.innerHTML = htmlFragment;
 				frag.appendChild(div);
@@ -294,10 +291,10 @@ I don't like touching the DOM that much as it can be a real performance overhead
 For example, if I create an element `var div = document.createElement('div')` then if I need another `div` element then I'll re-use that previous variable `var new_div = div.cloneNode();` and if I'm referencing a property such as `document` more than twice then I'll store it in a variable… 
 
 ```js
-var doc = document,
-	element_a = doc.getElementById('testA'),
-	element_b = doc.getElementById('testB'),
-	divs = doc.getElementsByTagName('div');
+var doc = document;
+var element_a = doc.getElementById('testA');
+var element_b = doc.getElementById('testB');
+var divs = doc.getElementsByTagName('div');
 ```
 
 When adding style settings to an element I'll use a `class` instead… 
@@ -345,13 +342,12 @@ ajax({
 	url: 'Assets/Templates/Video.tpl',
 	data: 'html',
 	onSuccess: function (data) {
-		var template = hogan.compile(data),
-			content = template.render({ 
+		var template = hogan.compile(data);
+		var content = template.render({ 
 				title: 'My Title' 
 			});
-			
-		var frag = doc.createDocumentFragment(),
-			div = doc.createElement('div');
+		var frag = doc.createDocumentFragment();
+		var div = doc.createElement('div');
 		
 		div.innerHTML = content;
 		frag.appendChild(div);
