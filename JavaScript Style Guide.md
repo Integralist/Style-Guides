@@ -18,6 +18,7 @@ Here is what we'll cover:
 	* Ternary operator
 	* Spacing
 	* Comparison
+	* Coercion
 	* Naming Conventions
 	* Returning a value
 * DOM (Document Object Model)
@@ -204,6 +205,34 @@ function bind (func, context) {
 I use strict equality `===` over `==`.
 
 The only exception is when I'm checking the result from the `typeof` operator, as it always returns a string so there is no point using `===`.
+
+###Coercion
+
+Take advantage of JavaScript's ability to coerce objects into different types.
+
+```js
+var element = document.getElementById('js-element');
+
+if (element) {
+	// if the DOM element is available then this conditional
+	// will coerce `element` into a Boolean
+}
+```
+
+You can coerce a value into a Boolean by using the double negation operator `!!`...
+
+```js
+var obj = { age: 0, year: 1980 };
+
+!!obj.age // => false (because zero coerces to false)
+!!obj.year // => true (any number greater than zero coerces to true)
+```
+
+All Objects/Arrays coerce to true (even an empty Array).
+
+An empty String wil coerce to false.
+
+For full details see [http://webreflection.blogspot.co.uk/2010/10/javascript-coercion-demystified.html](http://webreflection.blogspot.co.uk/2010/10/javascript-coercion-demystified.html)
 
 ###Naming Conventions
 
