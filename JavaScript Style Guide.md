@@ -641,8 +641,9 @@ test('the test name', function (t) {
 
 If you're using jQuery then there are only a few rules to abide by...
 
-* Cache jQuery instances at all possible points  
-```js
+###Cache jQuery instances at all possible points 
+ 
+```
 var test = $('#js-element');
 test.addClass('is-active');
 test.removeClass('is-hidden');
@@ -654,8 +655,10 @@ $('#js-element').removeClass('is-hidden');
 // ...AS THIS MEANS YOU'RE CREATING TWO NEW jQuery INSTANCES. 
 // PLUS YOU'RE UNNECESSARILY LOOKING UP THE SAME ELEMENT TWICE
 ```
-* Avoid jQuery's `.css()` method as that creates an 'inline style' which can be an expensive DOM interaction - instead aim to use `.addClass()`  
-```js
+
+###Avoid jQuery's `.css()` method as that creates an 'inline style' which can be an expensive DOM interaction - instead aim to use `.addClass()`  
+
+```
 var test = $('#js-element');
 
 // SO INSTEAD OF THIS...
@@ -664,12 +667,22 @@ test.css({backgroundColor: '#ffe', borderLeft: '5px solid #ccc'});
 // ...DO THIS...
 test.addClass('is-highlighted'); // .is-highlighted is set via your CSS
 ```
-* Use the latest version release of jQuery
-* Use the latest API (e.g. avoid `.click()` and use `.on()` instead)
-* Use event delegation where ever possible (do not have multiple individual `click` events for one element - e.g. click event for every `<li>` in a un-ordered list)
-* Don't use jQuery's abstracted AJAX methods `post()` and `get()` - just use the `ajax()` method as it's clearer/more specific and allows error handler to be used.
-* If you must use jQuery to search for elements then the quickest way to do that is with the `.find()` method  
-```js
+
+###Use the latest version release of jQuery
+
+###Use the latest API 
+e.g. avoid `.click()` and use `.on()` instead
+
+
+###Use event delegation where ever possible 
+Do not have multiple individual `click` events for one element - e.g. click event for every `<li>` in a un-ordered list
+
+###Don't use jQuery's abstracted AJAX methods `post()` and `get()`
+Just use the `ajax()` method as it's clearer/more specific and allows error handler to be used.
+
+###If you must use jQuery to search for elements then the quickest way to do that is with the `.find()` method  
+
+```
 var test = $('#js-element'); // this is a <div> that contains a <ul> list
 var list_items = test.find('li');
 
@@ -678,4 +691,6 @@ var list_items = test.find('li');
 var test = $('#js-element'); // this is a <form> that contains a list of input options
 var list_items = test.find('.selected');
 ```
-* In general: avoid jQuery unless absolutely necessary.
+
+###In general...
+Avoid jQuery unless absolutely necessary.
