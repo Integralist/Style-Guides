@@ -41,20 +41,20 @@ This isn't a 'righteous' guide. If there is anything here you don't like, then d
 }
 ```
 
-As you can also see from the above example, I like to keep a space between the `property` and the `value`. I also prefer to keep each `declaration` on a separate line (it'll all get minified as part of a build process so no point in trying to optimise my source files).
+As you can also see from the above example, you should keep a space between the `property` and the `value`. You should also keep each `declaration` on a separate line (it'll all get minified as part of a build process so no point in trying to optimise my source files).
 
 Avoid use of the `!important` statement wherever possible. The only exception is when you're writing object-oriented CSS, you may need to set the 'state' for a layout/module which requires the use of `!important` (see **OOCSS** below for more details).
 
 ##Sass
 
-I use the [Sass](http://sass-lang.com/) pre-processor via the command line.
+Use the [Sass](http://sass-lang.com/) pre-processor via the command line.
 
-I know there is a 'marmite - love/hate' relationship with pre-processors, and in some cases for good reason. I know the downsides and issues to be aware of and so I'm comfortable with using them.
+I know there is a 'marmite - love/hate' relationship with pre-processors, and in some cases for good reason. As long as you know the downsides/concerns with using it then you can make sure you don't fall into any performance traps.
 
-There are a couple of things to be aware of with Sass:
+There are a couple of rules to try and abide to when using Sass:
 
-* Use Sass to make you more productive (try not to use it for the sake of it)
-* Try and avoid `@include` and `@extend` as both can _potentially_ be a cause of bloated CSS - aim for more abstracted code (OOCSS)
+* Use Sass to make you more productive - don't use all its features (functions/loops/mixins etc) just for the sake of it
+* Avoid `@include` and `@extend` as both can _potentially_ be a cause of bloated CSS - aim for more abstracted code (OOCSS)
 * Use `@import` in your top level `.scss` file only (where possible) - nested `@import` statements can get confusing otherwise
 * Don't nest selectors as this can result in badly performing selectors - make sure you understand the CSS that nested selectors generates
 
@@ -62,15 +62,15 @@ For more information about Sass please [read my guide](https://github.com/Integr
 
 ##Object-Oriented CSS (OOCSS)
 
-I use OOCSS to ensure my stylesheets are as flexible and easily maintainable as possible.
+Use OOCSS to ensure stylesheets are as flexible and easily maintainable as possible.
 
-OOCSS is very scalable and is a bit of a large subject to cover so for more information I'll refer you to another page where [I elaborate on how I structure my CSS to fit with OOCSS](https://github.com/Integralist/Resume/blob/master/Object-Oriented-CSS.md)
+OOCSS is very scalable/flexible but is a bit of a large subject to cover, so for more information I'll refer you to my other post where [I elaborate on how to structure your CSS to fit the OOCSS methodology](https://github.com/Integralist/Resume/blob/master/Object-Oriented-CSS.md)
 
 ##Comments
 
-I like to add comments throughout the code to highlight any confusing areas (or anything that might not be obvious - such as working around a specific browser quirk).
+Add comments throughout the code to highlight any confusing areas (or anything that might not be obvious - such as working around a specific browser quirk).
 
-Also, at the top of every stylesheet I include a heading which briefly explains the purpose of the style sheet, for example…
+Also, at the top of every stylesheet include a heading which briefly explains the purpose of the style sheet, for example…
 
 ```css
 /* =============================================================================
@@ -81,23 +81,25 @@ Also, at the top of every stylesheet I include a heading which briefly explains 
 
 ##Mobile first
 
-I like to implement a 'mobile first' approach which means I use a base stylesheet which displays the site as cleanly as possible on mobile devices. I then use Media Queries to load additional CSS at specific 'break points' that work well for the design.
+If you have the budget/time then aim to Implement a 'mobile first' approach which means you'll use a base stylesheet which displays the site as cleanly as possible on mobile devices. Then use Media Queries to load additional CSS at specific 'break points' that work well for the design.
 
-I suggest your media queries don't target current mobile/tablet screen dimensions as in the future there may be other devices released with different dimensions. If your designs are fluid and are set to look good at specific break-points then your site should look good and be usable on pretty much any device.
+Your media queries should (ideally) not target current mobile/tablet screen dimensions - because in the future there may be other devices released with different dimensions that you haven't catered for. If your designs are fluid and are set to look good at specific break-points then your site should look good and be usable on pretty much any device.
 
 ##Resets
 
-I don't like CSS resets. 
+Don't use CSS resets. 
 
 You end up writing more code to work around the lack of styling than you would have written to work around one or two browser 'quirks'.
 
-Although I don't like CSS resets, I do like (and use) Nicolas Gallagher's [normalise.css](https://github.com/necolas/normalize.css) - *which I've modified with a few adjustments that better suit my style*. The reason I use 'normalise.css' is because it doesn't take a 'scorched earth' approach (where it wipes out all browser styles), it simply tries to normalise certain native styles (as well as try to fix some known quirky browser bugs) 
+Do use Nicolas Gallagher's [normalise.css](https://github.com/necolas/normalize.css) - *and feel free to add any modifications required so it fits the company's house style*. The reason you should use 'normalise.css' is because it doesn't take a 'scorched earth' approach (i.e. wipes out all browser styles), it simply tries to normalise certain native styles (as well as try to fix some known quirky browser bugs) 
 
 ##Browser support
 
-I write my CSS to work with [Mozilla Firefox](www.mozilla.org/en-US/firefox/).
+Write your CSS to work first with [Mozilla Firefox](www.mozilla.org/en-US/firefox/) as it is the most unbiased and standard compliant browser available.
 
-If WebKit browsers (such as Apple Safari or Google Chrome) need any additional tweaks (which is rare but does happen), then I use a webkit hack to target those browsers… 
+Once your CSS is working on Firefox then you can look at any issues with other browsers. This doesn't mean *not check* other browsers while developing. You should be regularly checking your code against all supported browsers during development - this way you catch out any quirks early.
+
+If WebKit browsers (such as Apple Safari or Google Chrome) need any additional tweaks (which is rare but does happen), then use a webkit hack to target those browsers… 
 
 ```css
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -105,11 +107,11 @@ If WebKit browsers (such as Apple Safari or Google Chrome) need any additional t
 }
 ```
 
-After that, we only really worry about Internet Explorer (*see following section*).
+After that, you only really need to worry about Internet Explorer (*see following section*).
 
 ##Internet Explorer
 
-To work around some of the quirks in IE's rendering I no longer use Microsoft's Conditional Comments to load in additional style sheets just for IE, like the following...
+To work around some of the quirks in IE's rendering you should use Microsoft's Conditional Comments, but NOT to load in additional style sheets just for IE like the following example...
 
 ```html
 <!--[if IE 8]>
@@ -121,7 +123,7 @@ To work around some of the quirks in IE's rendering I no longer use Microsoft's 
 <![endif]-->
 ```
 
-...I instead use [Paul Irish's solution](http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/)…
+...instead use [Paul Irish's solution](http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/)…
 
 ```html
 <!--[if IE 8]><html class="ie8" dir="ltr" lang="en"><![endif]-->
@@ -129,6 +131,6 @@ To work around some of the quirks in IE's rendering I no longer use Microsoft's 
 <!--[if gt IE 9]><!--> <html dir="ltr" lang="en"> <!--<![endif]-->
 ```
 
-...this helps me keep my CSS modules together and more easily maintainable.
+...this helps keep your CSS modules together and more easily maintainable.
 
-But since dropping IE7 support AND implementing a more modular (OOCSS) approach to writing my CSS I've found IE related bugs (although still apparent) have pretty much fallen off the radar compared to previously!
+Since we dropped IE7 support AND implemented a more modular (OOCSS) approach to writing our CSS we've found IE related bugs (although still apparent) have pretty much fallen off the radar compared to previously!
