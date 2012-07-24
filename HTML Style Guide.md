@@ -6,6 +6,8 @@ Feel free to take the bits you like and/or modify to your own style.
 
 This isn't a 'righteous' guide. If there is anything here you don't like, then don't worry. I'm not forcing you to play along.
 
+**UNLESS you work with me and my team: then you have to follow these rules for the sake of consistency and maintainability**
+
 ##Terminology
 
 For full description please [read this article](http://www.456bereastreet.com/archive/200508/html_tags_vs_elements_vs_attributes/)
