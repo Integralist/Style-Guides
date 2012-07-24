@@ -6,7 +6,9 @@ Feel free to take the bits you like and/or modify to your own style.
 
 This isn't a 'righteous' guide. If there is anything here you don't like, then don't worry. I'm not forcing you to play along.
 
-One thing to be aware of is that throughout this guide, to illustrate my style over another, I will mark something as 'bad' and then mark what I prefer as 'good'. I'm fully aware that this is not the best choice of phrase because one way isn't necessarily 'bad', it's just not my preferred way. So please don't hate on me for doing this, it's just the simplest way to demonstrate my preferred format. 
+**UNLESS you work with me and my team: then you have to follow these rules for the sake of consistency and maintainability**
+
+One thing to be aware of is that throughout this guide, to illustrate our style over another, we will mark something as 'bad' and then mark what we prefer as 'good'. We'm fully aware that this is not the best choice of phrase because one way isn't necessarily 'bad', it's just not our preferred way. So please don't hate on us for doing this, it's just the simplest way to demonstrate my preferred format. 
 
 Here is what we'll cover:
 
@@ -36,7 +38,7 @@ Here is what we'll cover:
 
 ##Terminology
 
-For seasoned developers this section isn't necessary, but sometimes I find it useful to clarify some of the following terms to ensure all developers on the team understand what they refer to… 
+For seasoned developers this section isn't necessary, but sometimes it is useful to clarify some of the following terms to ensure all developers on the team understand what they refer to… 
 
 Term                  | Example
 --------------------- | -------------
@@ -108,7 +110,7 @@ function myFunction (abc, xyz) {
 
 ###Loops
 
-I don't like using `for` loops for no other reason than I think they're ugly and harsher on the eyes than a `while` loop (besides, there are some micro-optimisations that can be had from using a `while` loop)… 
+Don't use `for` loops unless you feel you absolutely must. There is a micro-optimisation that can be had from using a `while` loop instead, but generally `for` loops are harder to read and understand compared to `while` loops… 
 
 ```js
 // Bad
@@ -122,11 +124,13 @@ var arr = ['a', 'b', 'c'];
 var len = arr.length;
 	
 while (len--) {
-	// do something
+	// do something 
+	// note: this loop will run in reverse - this is the fastest way to loop
+	// most of the time the direction of your loop isn't important.
 }
 ```
 
-…and if you're worrying about your `while` loop going backwards, you can still go forwards and have it look cleaner than the `for` loop (IMO)…
+…but if you're worried about your `while` loop going backwards, you can still go forwards and have it look cleaner than the `for` loop (IMO)…
 
 ```js
 var arr = ['a', 'b', 'c'];
@@ -142,7 +146,7 @@ while (counter < len) {
 
 ###Ternary operator
 
-I use the ternary operator `?:` for only short if/else statements.
+Only use the ternary operator `?:` for short if/else statements.
 
 ```js
 // Bad
@@ -158,7 +162,7 @@ if (condition) {
 
 ###Spacing
 
-My style of spacing is a little more complicated than others because it changes depending on the context… 
+Our style of spacing is a little more complicated than others because it changes depending on the context… 
 
 ```js
 // No arguments: no space around parenthesis
@@ -190,7 +194,7 @@ for (condition) {
 }
 ```
 
-…also, if a function is quite long I find it clearer to have a space inside of the brackets… 
+…also, if a function is quite long then it can be clearer to have a space inside of the brackets… 
 
 ```js
 // This is a function taken from Underscore.js
@@ -232,9 +236,9 @@ function bind (func, context) {
 
 ###Comparison
 
-I use strict equality `===` over `==`.
+Use strict equality `===` over `==`.
 
-The only exception is when I'm checking the result from the `typeof` operator, as it always returns a string so there is no point using `===`.
+The only exception is when you're checking the result from the `typeof` operator, as it always returns a string so there is no point using `===`.
 
 ###Coercion
 
@@ -266,7 +270,7 @@ For full details see [http://webreflection.blogspot.co.uk/2010/10/javascript-coe
 
 ###Naming Conventions
 
-I define long names using an underscore as I find it easier to read… 
+Define long names using an underscore as it is easier to read… 
 
 ```js
 var user_location = 'England';
@@ -278,7 +282,7 @@ function get_user_location(){
 
 ###Returning a value
 
-I prefer to `return` a function as early as possible as it makes it clearer when a function fails/succeeds.
+Try to `return` a function as early as possible, as it makes it clearer when a function fails/succeeds.
 
 ###Asynchronous code
 
@@ -286,7 +290,7 @@ Whenever you're working with asynchronous code, consider the use of [Promises](h
 
 > Promises provide a well-defined interface for interacting with an object that represents the result of an action that is performed asynchronously, and may or may not be finished at any given point in time. By utilizing a standard interface, different components can return promises for asynchronous actions and consumers can utilize the promises in a predictable manner. Promises can also provide the fundamental entity to be leveraged for more syntactically convenient language-level extensions that assist with asynchronicity. 
 
-My library of choice is [When.js](https://github.com/cujojs/when). It makes it a lot easy to manage asynchronous operations:
+Our library of choice is [When.js](https://github.com/cujojs/when). It makes it a lot easy to manage asynchronous operations:
 
 ```js
 define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?author=xxxx&alt=json'], function (when, swf, videos) {
@@ -342,12 +346,13 @@ define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?au
 });
 ```
 
+...but note Promises/Deferred objects are available with jQuery.
 
 ##DOM (Document Object Model)
 
-I don't like touching the DOM that much as it can be a real performance overhead, so I will cache DOM elements and properties/values and re-use elements wherever possible.
+Don't touch the DOM unless you absolutely must, as it can be a real performance overhead. Make sure you cache DOM elements and properties/values and re-use elements wherever possible.
 
-For example, if I create an element `var div = document.createElement('div')` then if I need another `div` element then I'll re-use that previous variable `var new_div = div.cloneNode();` and if I'm referencing a property such as `document` more than twice then I'll store it in a variable… 
+For example, if you create an element `var div = document.createElement('div')` and you find you need another `div` element then just re-use that previous variable `var new_div = div.cloneNode();` and if you're referencing a property such as `document` more than twice then make sure you store it in a variable… 
 
 ```js
 var doc = document;
@@ -356,7 +361,7 @@ var element_b = doc.getElementById('testB');
 var divs = doc.getElementsByTagName('div');
 ```
 
-When adding style settings to an element I'll use a `class` instead… 
+When adding style settings to an element use a `class` instead… 
 
 ```js
 var element = doc.getElementById('test');
@@ -369,7 +374,7 @@ element.style.backgroundColor = 'yellow';
 element.className = 'style_a';
 ```
 
-…and in a separate CSS we have… 
+…and in a separate CSS you would have… 
 
 ```css
 .style_a {
@@ -386,7 +391,7 @@ Normally you would use JavaScript to locate HTML in your page and then update an
 
 Instead you should have any modules(HTML) within your page/web application that will be dynamically updated placed inside separate template files which you load into memory using AJAX and then process the templates by passing in the relevant data and once rendered you can insert the template into the DOM.
 
-There are many templating libraries available but I prefer to use [Hogan.js](http://twitter.github.com/hogan.js/) which is modelled from [Mustache](https://github.com/janl/mustache.js#readme).
+There are many templating libraries available but we use [Hogan.js](http://twitter.github.com/hogan.js/) which is modelled from [Mustache](https://github.com/janl/mustache.js#readme).
 
 Here follows is an example of a template and how to render it using Hogan… 
 
@@ -417,7 +422,7 @@ ajax({
 
 ##Modular
 
-I write my JavaScript to be AMD compatible which means having multiple scripts written like 'modules' which you call into your main script when needed… 
+Write your JavaScript to be AMD compatible. This means having multiple scripts written like 'modules' which you call into your main script when needed… 
 
 ```js
 require(['module_a', 'module_b', 'module_c'], function (a, b, c) {
@@ -448,9 +453,11 @@ If you don't like using AMD then you can get away with using an anonymous functi
 
 …but there is no real organisation/structure of code this way.
 
+**NOTE: if  you work with me and my team: then you have to follow the AMD rule for the sake of consistency and maintainability**
+
 ##Application structure
 
-Having a clear and easy to undestand directory architecture is important. I don't like having all my JavaScript files dumped inside a single folder, I prefer having a defined structure for my applications.
+Having a clear and easy to undestand directory architecture is important. Don't just have all your JavaScript files dumped inside a single folder. Instead have a defined structure for your applications.
 
 The following is an example: 
 
@@ -464,27 +471,24 @@ The following is an example:
 		* Tests
 		* Utilities
 
-…this gives me a clear separation of modules into an organised structure.
+…this gives you a clear separation of modules into an organised structure.
 
 ##Linting
 
-I use [JSHint](http://www.jshint.com/) via the command line interface to find syntax errors in my code.
+Use [JSHint](http://www.jshint.com/) via the command line interface to find syntax errors in your code.
 
-This helps keep a consistency of style and prevent issues when code is minified via a build script.
+This helps keep a consistency of style and prevents issues when code is minified via a build script.
 
-Some things JsHint ensures I do is:
+Some things JsHint ensures:
 
 * Always put curly braces around blocks in loops and conditionals
-* Prohibits the use of `==` and `!=` in favor of `===` and `!==` (any time I'm checking against typeof result I just ignore its warnings)
+* Prohibits the use of `==` and `!=` in favor of `===` and `!==` (any time you're checking a `typeof` result you should use `==` and just ignore any warnings about using `===` because `typeof` ALWAYS returns a String so no need for the strict equality check)
 
-Some of the items I ignore are:
-
-* Checking properties with `hasOwnProperty` within a `for in` loop (I know issues can arise but 99% of the time for me I know I'm not going to have an issues - if I start extending a native such as `Array` for example then I'll make sure I include this, but I don't want to be forced into it unnecessarily)
-
+One error you might see is the one asking you to use `hasOwnProperty` when checking properties inside of a `for in` loop. 99% of the time you'll know it wont be an issue, but if you start extending natives (such as `Array`) then you open yourself up to the possibility of un-intended results that cause your code to error.
 
 ###Configuration
 
-My configuration file for JSHint is as follows… 
+The configuration file for JSHint is as follows… 
 
 ```js
 {
@@ -583,11 +587,11 @@ A build tool/script/process is a way of making your code/project as efficient an
 
 ###JavaScript Build Script
 
-For my JavaScript, because I use AMD and specifically [RequireJs](http://requirejs.org/), I also use RequireJs' own build script which is called 'r.js'.
+For our JavaScript, because we use AMD and specifically [RequireJs](http://requirejs.org/), we also use RequireJs' own build script which is called 'r.js'.
 
 The way 'r.js' works is that you execute a configuration file via the command line (using either Java or Node.js)
 
-The 'r.js' build script takes all my JavaScript 'modules' and combines them into a single file that only contains the relevant modules required for that section of my application to run. I prefer this method over lazy-loading multiple files at run time because on certain devices (such as devices which generally have poor connection speed not to mention hardware not being that great in comparison to the desktop) can be slower to load than just loading a single (although larger) JavaScript file.
+The 'r.js' build script takes all our JavaScript 'modules' and combines them into a single file that only contains the relevant modules required for that section of our application to run. 
 
 There are many build tools available, some of which are:
 
@@ -600,14 +604,14 @@ As long as you're using some form of build script your application will be bette
 
 Performance is a big issue but can easily turn into micro-optimisations.
 
-For example, some things I like to do which are definitely micro-opts are:
+For example, some things you can do (which are definitely micro-opts):
 
 * Use `~~` over `Math.floor`
-* Use reverse `while` loop instead of forward `for` loop (*plus I think it looks cleaner and is easier to understand*)
+* Use reverse `while` loop instead of forward `for` loop (*BUT has the bonus of being clearer to read/understand*)
 
-I think the best approach is to try and not to make things too complicated. But if you want to use some bizarre micro-optimisation technique then make sure you comment it well and include links to articles about the technique so that other developers who look at your code don't get confused as to what your cryptic piece of code means.
+The best approach is to try and not to make things too complicated. But if you want to use some bizarre micro-optimisation technique then make sure you comment it well and include links to articles about the technique so that other developers who look at your code don't get confused as to what your cryptic piece of code means.
 
-One performance trick I like to do is to caching (I try to cache whenever I can). Caching can be handled in a variety of different ways depending on what you want to cache: you could cache a heavy computation, or a variable/property to aid scope lookups, or you could cache a DOM object. 
+One performance trick which is good to do is caching (try to cache whenever you can). Caching can be handled in a variety of different ways depending on what you want to cache. You could cache a heavy computation, or a variable/property to aid scope lookups, or you could cache a DOM object. 
 
 One way to cache results of a heavy computation is through memoization. One thing to remember is that the memoization technique doesn't have to be used for just 'heavy computations', it can be used in any instance where you want to save the JavaScript engine from having to do extra work unnecessarily. The following example demonstrates this… 
 
@@ -616,7 +620,7 @@ One way to cache results of a heavy computation is through memoization. One thin
  * The following method creates a new element or returns a copy of an element already created by this script.
  *
  * @param tagname { String } element to be created/copied
- * @return { Element/Node } the newly created element
+ * @return { Node } the newly created element node
  */
 var createElement = (function(){
 	// Memorize previous elements created
@@ -634,13 +638,13 @@ var createElement = (function(){
 }());
 ```
 
-For testing performance I highly recommend you use the online tool [jsPerf](http://jsperf.com/). It lets you write different test cases for a particular piece of code. For example if you wanted to see if a `while` loop was faster than a `for` loop then you would write a test that executed both loops against a familiar piece of code and jsPerf would execute that code repeatedly to see which variation performed better (e.g. [while vs for](http://jsperf.com/yet-another-for-vs-while/2))
+For testing performance use the online tool [jsPerf](http://jsperf.com/). It lets you write different test cases for a particular piece of code. For example if you wanted to see if a `while` loop was faster than a `for` loop then you would write a test that executed both loops against a familiar piece of code and jsPerf would execute that code repeatedly to see which variation performed better (e.g. [while vs for](http://jsperf.com/yet-another-for-vs-while/2))
 
 ##Unit testing
 
-Testing your code is very important and we should all do it. Personally, even though I know how important it is, I still don't write tests very often (*I work in an environment where code needs to be written fast and so time spent designing and building out an API just isn't feasible*).
+Testing your code is very important and we should all do it more. 
 
-That being said I do try whenever possible (e.g. when working on personal projects to unit test - or better yet practice TDD - my code).
+But we appreciate why this doesn't happen as often as it should.
 
 ###Test-Driven Development (TDD)
 
