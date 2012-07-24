@@ -57,14 +57,44 @@ e.g `"I'm stuck here until they're finished working"`).
 * Use multiple var statements (not one var statement for multiple variables - let your minifier/build script handle that for you)
 	* With the exception for variables have no value: `var name, age, location;` and should come last in the list of variables.
 
-###Code structure
+###File structure
 
-* Variables
-* Supporting functions
-* Code
+* Code Structure  
+Appears once at the top of every .js file
+* Function Information  
+Appears at the top of each function and is specific to that function
+* Variables  
+Define variables as close to the top of their scope as possible
+* Supporting functions  
+Inner functions should always follow the variable declarations and be in as logical 'order' as possible
+* Code  
+This is where the main crux of the function's code will sit
 
 ```js
-function myFunction(){
+/*
+ * Code Structure:
+ * - Variables
+ * - Functions
+ *   - fn_name_1
+ *   - fn_name_2
+ *   - fn_name_3
+ *   - fn_name_4
+ *   - fn_name_5
+ *   - fn_name_6
+ *   - fn_name_7
+ *   - fn_name_8
+ *   - fn_name_9
+ * - Initialisation
+ */
+
+/*
+ * This is the "Function Information".
+ * It should be short and to the point.
+ * 
+ * @param abc {String} describe what this argument is
+ * @param xyz {Integer} describe what this argument is
+ */
+function myFunction (abc, xyz) {
 	var name = 'Mark';
 	var location = 'England';
 		
