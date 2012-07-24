@@ -59,6 +59,7 @@ There are a couple of rules to try and abide to when using Sass:
 * Avoid `@include` and `@extend` as both can _potentially_ be a cause of bloated CSS - aim for more abstracted code (OOCSS)
 * Use `@import` in your top level `.scss` file only (where possible) - nested `@import` statements can get confusing otherwise
 * Don't nest selectors as this can result in badly performing selectors - make sure you understand the CSS that nested selectors generates
+* Use braces and proper CSS formatting (some pre-processors allow you to ignore braces - this makes code hard to read for others not familiar with the syntax)
 
 For more information about Sass please [read my guide](https://github.com/Integralist/Blog-Posts/blob/master/Guide-to-using-SASS.md) which discusses how to install and use Sass.
 
