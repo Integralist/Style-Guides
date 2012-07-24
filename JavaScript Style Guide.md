@@ -59,15 +59,15 @@ e.g `"I'm stuck here until they're finished working"`).
 
 ###File structure
 
-* Code Structure  
+* __Code Structure__  
 Appears once at the top of every .js file
-* Function Information  
+* __Function Information__  
 Appears at the top of each function and is specific to that function
-* Variables  
+* __Variables__  
 Define variables as close to the top of their scope as possible
-* Supporting functions  
+* __Supporting functions__  
 Inner functions should always follow the variable declarations and be in as logical 'order' as possible
-* Code  
+* __Code__  
 This is where the main crux of the function's code will sit
 
 ```js
