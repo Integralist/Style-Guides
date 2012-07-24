@@ -51,7 +51,14 @@ I use the [Sass](http://sass-lang.com/) pre-processor via the command line.
 
 I know there is a 'marmite - love/hate' relationship with pre-processors, and in some cases for good reason. I know the downsides and issues to be aware of and so I'm comfortable with using them.
 
-For more information about Sass please [read my guide](https://github.com/Integralist/Blog-Posts/blob/master/Guide-to-using-SASS.md) which points out all the good features along with information on some of the features that are best avoided (from a performance perspective) if you're not sure what you're doing.
+There are a couple of things to be aware of with Sass:
+
+* Use Sass to make you more productive (try not to use it for the sake of it)
+* Try and avoid `@include` and `@extend` as both can _potentially_ be a cause of bloated CSS - aim for more abstracted code (OOCSS)
+* Use `@import` in your top level `.scss` file only (where possible) - nested `@import` statements can get confusing otherwise
+* Don't nest selectors as this can result in badly performing selectors - make sure you understand the CSS that nested selectors generates
+
+For more information about Sass please [read my guide](https://github.com/Integralist/Blog-Posts/blob/master/Guide-to-using-SASS.md) which discusses how to install and use Sass.
 
 ##Object-Oriented CSS (OOCSS)
 
