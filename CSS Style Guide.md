@@ -64,7 +64,7 @@ For more information about Sass please [read my guide](https://github.com/Integr
 
 I use OOCSS to ensure my stylesheets are as flexible and easily maintainable as possible.
 
-OOCSS is very scalable and is a bit of a large subject to cover so I'll refer you to another page where [I elaborate on how I structure my CSS to fit with OOCSS](https://github.com/Integralist/Resume/blob/master/Object-Oriented-CSS.md)
+OOCSS is very scalable and is a bit of a large subject to cover so for more information I'll refer you to another page where [I elaborate on how I structure my CSS to fit with OOCSS](https://github.com/Integralist/Resume/blob/master/Object-Oriented-CSS.md)
 
 ##Comments
 
