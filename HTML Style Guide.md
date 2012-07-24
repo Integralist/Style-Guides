@@ -24,7 +24,7 @@ Term                  | Example
 ##Document Object Model (DOM)
 
 *The following is just a brief introduction to the DOM.  
-I've included it here as it ties into the next section of this guide - which discusses my 'Style' of writing HTML…*
+I've included it here as it ties into the next section of this guide - which discusses our 'Style' of writing HTML…*
 
 The DOM is an API which allows languages (such as JavaScript) to interact with the HTML page. If you have an element in the page, then a corresponding object is generated within the DOM to represent that element.
 
@@ -34,11 +34,11 @@ JavaScript uses the DOM to access different aspects of the HTML page and because
 
 ##Style
 
-I like to keep white space to a minimum. 
+Keep white space to a minimum. 
 
-I like to lowercase all elements and attributes (it just looks so much neater).
+Lowercase all elements and attributes (it just looks so much neater).
 
-I like indenting main 'sections', for example… 
+Indent main 'sections' - for example… 
 
 ```html
 <html>
@@ -51,24 +51,24 @@ I like indenting main 'sections', for example…
 </html>
 ```
 
-I like to keep my `<head>` section in the following order… 
+Keep `<head>` section in the following order… 
 
 1. `<meta>` elements
 2. Any required scripts (e.g. [Modernizr](http://modernizr.com/) or the [HTML5 Shiv](https://github.com/aFarkas/html5shiv))
 3. `<title>` element
 4. Style sheets
 
-I also like to ensure the DOM is as small and efficient as possible. I know the semantics of sections/elements are important but I really hate the idea of wrapping a `<ul>` which is used for my main navigation in a `<nav>` element. I prefer to just use `<ul class="nav">` to represent a `<ul>` that is a navigation module.
+Ensure the DOM is as small and efficient as possible. The semantics of sections/elements are important but don't wrap other elements such as a `<ul>` (which is typically used for a main navigation) in a `<nav>` element unless you really need to. Just use `<ul class="nav">` to represent a `<ul>` that is a navigation module.
 
-Something else I like to do with HTML (which isn't strictly speaking 'HTML' but does relate somewhat) is to flush the content buffer to the browser as soon as possible. To do this I use a server-side language (in my case PHP) to flush the content manually. So what this means is throughout my HTML, at key points (and by 'key points' I mean any where there is a large chunk of HTML - e.g. a `<section>` or `<article>`) I'll stick in `<?php flush(); ?>`. This helps with a user's *perceived performance* of the page loading, because while the page is loading the server pushes content to the browser as quickly as possible rather than waiting for all the content to be loaded before sending it to the browser.
+Something else you should do with HTML (which isn't strictly speaking 'HTML' but does relate somewhat) is to flush the content buffer to the browser as soon as possible. To do this you will need to use a server-side language (in our case PHP) to flush the content manually. So what this means is throughout the HTML, at key points (and by 'key points' we mean any where there is a large chunk of HTML - e.g. a `<section>` or `<article>`) you'll stick in `<?php flush(); ?>`. This helps with a user's *perceived performance* of the page loading, because while the page is loading the server pushes content to the browser as quickly as possible rather than waiting for all the content to be loaded before sending it to the browser.
 
 ##Comments
 
-I don't like using comments at the end of elements. I understand the principle behind it (e.g. it can make it easier to find the end of a section) but it is just so god damn ugly.
+Don't use comments at the end of elements. We understand the principle behind it (e.g. it can make it easier to find the end of a section) but it is just so god damn ugly.
 
 ##Internet Explorer
 
-To work around some of the quirks in IE's rendering I no longer use Microsoft's Conditional Comments to load in additional style sheets just for IE, like the following...
+To work around some of the quirks in IE's rendering do use Microsoft's Conditional Comments, but NOT to load in additional style sheets just for IE, like the following example...
 
 ```html
 <!--[if IE 8]>
@@ -80,7 +80,7 @@ To work around some of the quirks in IE's rendering I no longer use Microsoft's 
 <![endif]-->
 ```
 
-...I instead use [Paul Irish's solution](http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/)…
+...instead use [Paul Irish's solution](http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/)…
 
 ```html
 <!--[if IE 8]><html class="ie8" dir="ltr" lang="en"><![endif]-->
@@ -88,11 +88,11 @@ To work around some of the quirks in IE's rendering I no longer use Microsoft's 
 <!--[if gt IE 9]><!--> <html dir="ltr" lang="en"> <!--<![endif]-->
 ```
 
-...this helps me keep my CSS modules together and more easily maintainable.
+...this helps keep your CSS modules together and more easily maintainable.
 
 ##Example
 
-Here follows is a basic boilerplate of an HTML page I normally start out with… 
+Here follows is a basic boilerplate of an HTML page we normally start out with… 
 
 ```html
 <!doctype html>
