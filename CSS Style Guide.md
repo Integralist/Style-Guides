@@ -67,7 +67,13 @@ For more information about Sass please [read my guide](https://github.com/Integr
 
 Use OOCSS to ensure stylesheets are as flexible and easily maintainable as possible.
 
-OOCSS is very scalable/flexible but is a bit of a large subject to cover, so for more information I'll refer you to my other post where [I elaborate on how to structure your CSS to fit the OOCSS methodology](https://github.com/Integralist/Resume/blob/master/Object-Oriented-CSS.md)
+OOCSS is very scalable/flexible but is a bit of a large subject to cover, so for more information I'll refer you to my other post where [I elaborate on how to structure your CSS to fit the OOCSS methodology](https://github.com/Integralist/Resume/blob/master/Object-Oriented-CSS.md) but there are a couple of quick points that are important to remember:
+
+* Abstract common design patterns
+* Avoid making your modules too brittle/tightly coupled  
+e.g. don't set dimensional properties such as `width` (flexible modules should fill whatever space they are placed within)
+* Make sure your selectors are as specific as they need to be  
+e.g. The way to know if you should create a specific class is to ask a question like: "am I selecting this because it’s a ul inside of .header or because it is my site’s main nav?"
 
 ##Comments
 
