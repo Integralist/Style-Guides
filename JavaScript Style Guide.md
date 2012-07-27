@@ -46,6 +46,7 @@ Term                  | Example
 'statement'           | A statement is code that can be executed (statements are terminated with a semicolon)
 'function declaration'| `function myFunction(){ /* code */ }`
 'function expression' | `var myFunction = function(){ /* code */ };`
+'primitive'           | `undefined`, `null`, `boolean`, `string` and `number`
 
 ##Style
 
