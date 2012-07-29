@@ -42,8 +42,8 @@ For seasoned developers this section isn't necessary, but sometimes it is useful
 
 Term                  | Example
 --------------------- | -------------
-'expression'          | An expression is something a JavaScript engine can interpret as a value
-'statement'           | A statement is code that can be executed (statements are terminated with a semicolon)
+'expression'          | An expression is a command that the JavaScript engine can *evaluate* to produce a value
+'statement'           | A statement is a command that can be executed (statements are terminated with a semicolon)
 'function declaration'| `function myFunction(){ /* code */ }`
 'function expression' | `var myFunction = function(){ /* code */ };`
 'primitive'           | `undefined`, `null`, `boolean`, `string` and `number`
