@@ -47,6 +47,7 @@ Term                  | Example
 'function declaration'| `function myFunction(){ /* code */ }`
 'function expression' | `var myFunction = function(){ /* code */ };`
 'primitive'           | `undefined`, `null`, `boolean`, `string` and `number`
+'operator'            | `+`, `-`, `!`, `++`, `===`, `&&`, `typeof`
 
 ##Style
 
