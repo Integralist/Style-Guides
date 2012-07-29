@@ -40,14 +40,15 @@ Here is what we'll cover:
 
 For seasoned developers this section isn't necessary, but sometimes it is useful to clarify some of the following terms to ensure all developers on the team understand what they refer to… 
 
-Term                  | Example
---------------------- | -------------
-'expression'          | An expression is a command that the JavaScript engine can *evaluate* to produce a value
-'statement'           | A statement is a command that can be executed (statements are terminated with a semicolon)
-'function declaration'| `function myFunction(){ /* code */ }`
-'function expression' | `var myFunction = function(){ /* code */ };`
-'primitive'           | `undefined`, `null`, `boolean`, `string` and `number`
-'operator'            | `+`, `-`, `!`, `++`, `===`, `&&`, `typeof`
+Term                | Example
+------------------- | -------------
+expression          | An expression is a command that the JavaScript engine can *evaluate* to produce a value
+statement           | A statement is a command that can be executed (statements are terminated with a semicolon)
+identifier          | A name (e.g. variable name, function name, labels for loops).
+function declaration| `function myFunction(){ /* code */ }`
+function expression | `var myFunction = function(){ /* code */ };`
+primitive           | `undefined`, `null`, `boolean`, `string` and `number`
+operator            | `+`, `-`, `!`, `++`, `===`, `&&`, `typeof`
 
 ##Style
 
