@@ -60,6 +60,7 @@ There are a couple of rules to try and abide to when using Sass:
 * Use `@import` in your top level `.scss` file only (where possible) - nested `@import` statements can get confusing otherwise
 * Don't nest selectors as this can result in badly performing selectors - make sure you understand the CSS that nested selectors generates
 * Use braces and proper CSS formatting (some pre-processors allow you to ignore braces - this makes code hard to read for others not familiar with the syntax)
+* Use the `&` character to reference the parent selector (and for IE fixes use the `&` character at the end to wrap selector in your specified parent selector - [see here for an example](https://gist.github.com/3226822))
 
 For more information about Sass please [read my guide](https://github.com/Integralist/Blog-Posts/blob/master/Guide-to-using-SASS.md) which discusses how to install and use Sass.
 
