@@ -4,18 +4,16 @@ This is my own personal style guide for writing JavaScript.
 
 Feel free to take the bits you like and/or modify to your own style.
 
-This isn't a 'righteous' guide. If there is anything here you don't like, then don't worry. I'm not forcing you to play along.
-
-**UNLESS you work with me and my team: then you have to follow these rules for the sake of consistency and maintainability**
-
-One thing to be aware of is that throughout this guide, to illustrate our style over another, we will mark something as 'bad' and then mark what we prefer as 'good'. We'm fully aware that this is not the best choice of phrase because one way isn't necessarily 'bad', it's just not our preferred way. So please don't hate on us for doing this, it's just the simplest way to demonstrate my preferred format. 
+One thing to be aware of is that throughout this guide, to illustrate our style over another, we will mark something as 'bad' and then mark what we prefer as 'good'. We're fully aware that this is not the best choice of phrase because one way isn't necessarily 'bad', it's just not our preferred way.
 
 Here is what we'll cover:
 
 * Terminology
 * Style
 	* Basics
-	* Code structure
+	* Comments
+	* File structure
+	* Constructors
 	* Loops
 	* Ternary operator
 	* Spacing
@@ -30,8 +28,7 @@ Here is what we'll cover:
 * Linting
 * Build process
 * Performance considerations
-* Unit testing
-	* Test-Driven Development
+* Test-Driven Development (TDD)
 	* Testing frameworks
 * jQuery
 
@@ -60,7 +57,40 @@ e.g `"I'm stuck here until they're finished working"`).
 * Never mix spaces and tabs.
 * Use four spaces to represent a single tab.
 * Use multiple var statements (not one var statement for multiple variables - let your minifier/build script handle that for you)
-	* With the exception for variables have no value: `var name, age, location;` and should come last in the list of variables.
+	* With the exception of variables that have no value: `var name, age, location;` and these should come last in the list of variables.
+* Only use a function expression `var x = function(){};` when you absolutely must (e.g. when you need to execute a function immediately and store its return value `var x = (function(){ /* some expensive operation*/ return 'results of operation'; }());`). Otherwise use a function declaration instead.
+
+###Comments
+
+For function descriptions use the JSDoc variety of comment ([see here](https://developers.google.com/closure/compiler/docs/js-for-compiler) for more details)...
+
+```js
+/**
+ * Main function description
+ * @param {number} description
+ * @param {string|number|null} description
+ * @return {string} description
+ */
+```
+
+Note: types are defined lowercase, and multiple parameter types are separated by the `|` pipe character. Lastly, if your function has no return value then leave off the `@return` statement.
+
+For short one-line comments then use two forward slashes `// this is my comment`
+
+For longer comments then use a multi-line comment...
+
+```js
+
+/*
+    This is my longer comment, it will describe in much more detail
+    the bug that this code was written to work-around.
+    
+    Comments should ideally be used to describe any code that might
+    not be obvious to junior developers new to the language or even
+    seasoned developers who aren't sure the purpose of a piece of code
+    because potentially you've had to hack around a bizarre device bug.
+ */
+```
 
 ###File structure
 
@@ -76,7 +106,7 @@ Inner functions should always follow the variable declarations and be in as logi
 This is where the main crux of the function's code will sit
 
 ```js
-/*
+/**
  * Code Structure:
  * - Variables
  * - Functions
@@ -92,24 +122,55 @@ This is where the main crux of the function's code will sit
  * - Initialisation
  */
 
-/*
+/**
  * This is the "Function Information".
  * It should be short and to the point.
  * 
- * @param abc {String} describe what this argument is
- * @param xyz {Integer} describe what this argument is
+ * @param abc {string} describe what this argument is
+ * @param xyz {number} describe what this argument is
  */
-function myFunction (abc, xyz) {
+function my_function (abc, xyz) {
 	var name = 'Mark';
 	var location = 'England';
 		
-	function doSomething (withThis) {
+	function do_something (with_this) {
 		// do something
 	}
 	
 	// main code for this function
 }
+
+/**
+ * This is my other function, so add some more function information.
+ * Again, it should be short and to the point.
+ * 
+ * @param abc {string} describe what this argument is
+ * @param xyz {number} describe what this argument is
+ */
+function my_function (abc, xyz) {
+	// main code for this function
+}
 ```
+
+###Constructors
+
+When using a constructor to create new objects (note: just to clarify, JavaScript utilises prototypal inheritance and not classical inheritance) you need to ensure the constructor starts with a capital letter so it's clear to other users that the function isn't a standard method but is a blueprint for creating new object instances.
+
+If you have no options to pass to the constructor function then make sure that you leave off the parenthesis around the function invocation...
+
+```js
+function Company (name) {
+  this.name = name || 'No name supplied';
+}
+
+var beeb = new Company('BBC');
+var unknown = new Company;
+
+console.log('beeb', beeb.name);
+console.log('unknown', unknown.name);
+```
+
+...this can be done with all constructors, whether they are custom user objects or built-in host objects, for example: `new Date` rather than `new Date()`
 
 ###Loops
 
@@ -147,6 +208,8 @@ while (counter < len) {
 }
 ```
 
+Note: you can make your forward incrementing `while` loops much more concise, but for the sake of demonstration we've used a more basic example.
+
 ###Ternary operator
 
 Only use the ternary operator `?:` for short if/else statements.
@@ -165,23 +228,23 @@ if (condition) {
 
 ###Spacing
 
-Our style of spacing is a little more complicated than others because it changes depending on the context… 
+Our style of spacing is a little more complicated than most because the choice of spacing changes depending on the context… 
 
 ```js
 // No arguments: no space around parenthesis
 
-function myFunction(){
+function my_function(){
 	// code
 }
-var myFunction = function(){
+var my_function = function(){
 	// code
 };
 
 // Arguments: keep a single space around parenthesis
-function myFunction (a, b, c) {
+function my_function (a, b, c) {
 	// code
 }
-var myFunction = function (a, b, c) {
+var my_function = function (a, b, c) {
 	// code
 };
 
@@ -203,7 +266,7 @@ for (condition) {
 // This is a function taken from Underscore.js
 function bind (func, context) {
 	
-	var bound, args;
+    var bound, args;
 	
     if (func.bind === nativeBind && nativeBind) {
     	return nativeBind.apply(func, slice.call(arguments, 1));
@@ -217,20 +280,20 @@ function bind (func, context) {
     
     return bound = function(){
     
-		if (!(this instanceof bound)) {
-			return func.apply(context, args.concat(slice.call(arguments)));
-		}
+        if (!(this instanceof bound)) {
+            return func.apply(context, args.concat(slice.call(arguments)));
+        }
 		
-		ctor.prototype = func.prototype;
+        ctor.prototype = func.prototype;
 		
-		var self = new ctor;
-		var result = func.apply(self, args.concat(slice.call(arguments)));
+        var self = new ctor;
+        var result = func.apply(self, args.concat(slice.call(arguments)));
 		
-		if (Object(result) === result) {
-			return result;
-		}
+        if (Object(result) === result) {
+            return result;
+        }
       
-      return self;
+        return self;
       
     };
 	
@@ -241,7 +304,7 @@ function bind (func, context) {
 
 Use strict equality `===` over `==`.
 
-The only exception is when you're checking the result from the `typeof` operator, as it always returns a string so there is no point using `===`.
+The only exception to this rule is when you're checking the result of a `typeof` operator check, as `typeof` always returns a string so there is no point using `===`.
 
 ###Coercion
 
@@ -251,8 +314,8 @@ Take advantage of JavaScript's ability to coerce objects into different types.
 var element = document.getElementById('js-element');
 
 if (element) {
-	// if the DOM element is available then this conditional
-	// will coerce `element` into a Boolean
+    // if the DOM element is available then this conditional
+    // will coerce `element` into a Boolean
 }
 ```
 
@@ -279,13 +342,13 @@ Define long names using an underscore as it is easier to read…
 var user_location = 'England';
 
 function get_user_location(){
-	// code
+    // code
 }
 ```
 
 ###Returning a value
 
-Try to `return` a function as early as possible, as it makes it clearer when a function fails/succeeds.
+Try to `return` a value from a function as early as possible, as it makes it clearer when a function fails/succeeds.
 
 ###Asynchronous code
 
@@ -293,69 +356,73 @@ Whenever you're working with asynchronous code, consider the use of [Promises](h
 
 > Promises provide a well-defined interface for interacting with an object that represents the result of an action that is performed asynchronously, and may or may not be finished at any given point in time. By utilizing a standard interface, different components can return promises for asynchronous actions and consumers can utilize the promises in a predictable manner. Promises can also provide the fundamental entity to be leveraged for more syntactically convenient language-level extensions that assist with asynchronicity. 
 
-Our library of choice is [When.js](https://github.com/cujojs/when). It makes it a lot easy to manage asynchronous operations:
+There are many Promise libraries available. The most popular being [When.js](https://github.com/cujojs/when). It makes it a lot easier to manage asynchronous operations:
 
 ```js
 define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?author=xxxx&alt=json'], function (when, swf, videos) {
 
-	var global = (function(){return this;}());
-	var doc = document;
-	var id = videos.feed.entry[0].id.$t.split('videos/')[1];
-	var flash = doc.createElement('div');
-	var container = doc.getElementsByTagName('div')[2];
-	var params, atts;
+    var global = (function(){return this;}());
+    var doc = document;
+    var id = videos.feed.entry[0].id.$t.split('videos/')[1];
+    var flash = doc.createElement('div');
+    var container = doc.getElementsByTagName('div')[2];
+    var params, atts;
 
-	function async (template) {
-		var dfd = when.defer();
-		var tmp, timer;
+    function async (template) {
+        var dfd = when.defer();
+        var tmp, timer;
 		
-		template({ 
-			title: 'Flash content inserted via JavaScript using a template to render content'
-		}),
+        template({ 
+            title: 'Flash content inserted via JavaScript using a template to render content'
+        }),
 		
-		// Because template() function is asynchronous (and no callback built-in)
-		// we use a timer to keep track of 'tmp' value
-		timer = global.setInterval(function(){ 
-			(!!tmp) 
-				? (global.clearInterval(timer), dfd.resolve(tmp)) 
-				: null; 
-		}, 25);		
+        /*
+            Because template() function is asynchronous (and no callback built-in)
+            we use a timer to keep track of 'tmp' value
+         */
+        timer = global.setInterval(function(){ 
+            (!!tmp) 
+                ? (global.clearInterval(timer), dfd.resolve(tmp)) 
+                : null; 
+        }, 25);		
 		
-		return dfd.promise;
-	}
+        return dfd.promise;
+    }
 		
-	function handler(){
+    function handler(){
         require(['tpl!../Templates/Video.tpl'], function (template) {
 			
-			when(async(template), function (htmlFragment) {
-				var frag = doc.createDocumentFragment();
-				var div = doc.createElement('div');
+            when(async(template), function (htmlFragment) {
+                var frag = doc.createDocumentFragment();
+                var div = doc.createElement('div');
 				
-				div.innerHTML = htmlFragment;
-				frag.appendChild(div);
-				container.insertBefore(frag, doc.getElementById('currentvideo'));
+                div.innerHTML = htmlFragment;
+                frag.appendChild(div);
+                container.insertBefore(frag, doc.getElementById('currentvideo'));
             });
             
         });
-	}
+    }
 	
-	flash.id = 'insertflash';
-	atts = { id: 'currentvideo' };
+    flash.id = 'insertflash';
+    atts = { id: 'currentvideo' };
 	
-	container.appendChild(flash);
+    container.appendChild(flash);
 	
-	swf.embedSWF('http://www.youtube.com/v/' + id + '?enablejsapi=1&playerapiid=ytplayer&version=3', 'insertflash', '270', '150', '8', null, null, null, atts, handler);
+    swf.embedSWF('http://www.youtube.com/v/' + id + '?enablejsapi=1&playerapiid=ytplayer&version=3', 'insertflash', '270', '150', '8', null, null, null, atts, handler);
 	
 });
 ```
 
-...but note Promises/Deferred objects are available with jQuery.
+Note: Promises/Deferred objects are available with jQuery and also the latest release of Ender's Reqwest library has now got Promises support built-in.
 
 ##DOM (Document Object Model)
 
-Don't touch the DOM unless you absolutely must, as it can be a real performance overhead. Make sure you cache DOM elements and properties/values and re-use elements wherever possible.
+Don't touch/interact with the DOM unless you absolutely must, as it can be a real performance overhead. 
 
-For example, if you create an element `var div = document.createElement('div')` and you find you need another `div` element then just re-use that previous variable `var new_div = div.cloneNode();` and if you're referencing a property such as `document` more than twice then make sure you store it in a variable… 
+Make sure you cache DOM elements and properties/values and re-use elements wherever possible.
+
+For example, if you create an element `var div = document.createElement('div')` and you find you need another `div` element then just re-use that previous variable `var new_div = div.cloneNode();` and if you're referencing a property (or method) such as `document` more than twice then make sure you store it in a variable… 
 
 ```js
 var doc = document;
@@ -374,13 +441,13 @@ element.style.border = '1px solid red';
 element.style.backgroundColor = 'yellow';
 
 // Good
-element.className = 'style_a';
+element.className = 'warning';
 ```
 
 …and in a separate CSS you would have… 
 
 ```css
-.style_a {
+.warning {
 	border: 1px solid red;
 	background-color: yellow;
 }
@@ -390,15 +457,16 @@ element.className = 'style_a';
 
 JavaScript templating is related to the DOM in that it allows you to insert dynamic data into HTML much more easily and cleanly.
 
-Normally you would use JavaScript to locate HTML in your page and then update and display the content (note: you could also be creating HTML using `innerHTML` or via the DOM API). But this means that you now have HTML being written inside your JavaScript which goes against the tenet of 'separating your concerns'. 
+Typically HTML is rendered server-side rather than client-side (as client-side rendering can be a performance issue on mobile devices with good JavaScript support but poor hardware). But if you must do HTML generation/template rendering on the client-side then use a template library such as [Hogan.js](http://twitter.github.com/hogan.js/) or [Handlebars.js](http://handlebarsjs.com/)
 
-Instead you should have any modules(HTML) within your page/web application that will be dynamically updated placed inside separate template files which you load into memory using AJAX and then process the templates by passing in the relevant data and once rendered you can insert the template into the DOM.
+Typically you will use JavaScript to locate HTML in your page and then update and display the content (note: you could also be creating HTML using `innerHTML` or via the DOM API). But this means that you now have HTML being written inside your JavaScript which goes against the tenet of 'separating your concerns'. 
 
-There are many templating libraries available but we use [Hogan.js](http://twitter.github.com/hogan.js/) which is modelled from [Mustache](https://github.com/janl/mustache.js#readme).
+Instead you should have any components within your page (which are required to be dynamically updated) placed inside separate template files which you load into memory using AJAX and then process the templates by passing in the relevant data and compiling the date into the template via JavaScript, and once rendered you can insert the template into the DOM.
 
-Here follows is an example of a template and how to render it using Hogan… 
+Here follows is an example of a template and how to render it using Hogan.js… 
 
 ```html
+<!-- this is a separate template file: example.tpl -->
 <div>
 	<p>{{title}}</p>
 </div>
@@ -406,45 +474,45 @@ Here follows is an example of a template and how to render it using Hogan…
 
 ```js
 ajax({
-	url: 'Assets/Templates/Video.tpl',
-	data: 'html',
-	onSuccess: function (data) {
-		var template = hogan.compile(data);
-		var content = template.render({ 
-				title: 'My Title' 
-			});
-		var frag = doc.createDocumentFragment();
-		var div = doc.createElement('div');
+    url: 'example.tpl',
+    data: 'html',
+    onSuccess: function (data) {
+        var template = hogan.compile(data);
+        var content = template.render({ 
+            title: 'My Title' 
+        });
+        var frag = doc.createDocumentFragment();
+        var div = doc.createElement('div');
 		
-		div.innerHTML = content;
-		frag.appendChild(div);
-		container.insertBefore(frag, target);
-	}
+        div.innerHTML = content;
+        frag.appendChild(div);
+            container.insertBefore(frag, target);
+    }
 });
 ```
 
 ##Modular
 
-Write your JavaScript to be AMD compatible. This means having multiple scripts written like 'modules' which you call into your main script when needed… 
+Write your JavaScript to be AMD compatible. This means having multiple scripts written like 'modules' which you insert into your main script when needed… 
 
 ```js
 require(['module_a', 'module_b', 'module_c'], function (a, b, c) {
-	// do something with the returned values from each module
+    // do something with the returned values from each module
 });
 ```
 
-…and a module is written like so… 
+A module is written like so… 
 
 ```js
 define(['module_d'], function (d) {
 
-	// do something with module 'd' 
-	// optionally return a value/object/function etc
+    // do something with module 'd' 
+    // optionally return a value/object/function etc
 
 });
 ```
 
-If you don't like using AMD then you can get away with using an anonymous function to protect the global environment from stray variables and other settings… 
+If you're building a basic prototype and don't require the full AMD modular code base then you can use an anonymous function to protect the global environment from stray variables and other settings… 
 
 ```js
 (function (global) {
@@ -454,9 +522,7 @@ If you don't like using AMD then you can get away with using an anonymous functi
 }(this));
 ```
 
-…but there is no real organisation/structure of code this way.
-
-**NOTE: if  you work with me and my team: then you have to follow the AMD rule for the sake of consistency and maintainability**
+…but be aware that this is only useful for prototyping and not production code as there is no real organisation/structure of code with a basic anonymous function way.
 
 ##Application structure
 
@@ -468,17 +534,16 @@ The following is an example:
 	* Styles
 	* Scripts
 		* Application
-		* Build
-		* Lint
-		* Plugins
+		* Modules
 		* Tests
-		* Utilities
 
 …this gives you a clear separation of modules into an organised structure.
 
 ##Linting
 
-Use [JSHint](http://www.jshint.com/) via the command line interface to find syntax errors in your code.
+Use [JSHint](http://www.jshint.com/) to ensure your code is valid.
+
+You can run JSHint via the command line or you can manually process it the JSHint website.
 
 This helps keep a consistency of style and prevents issues when code is minified via a build script.
 
@@ -487,95 +552,7 @@ Some things JsHint ensures:
 * Always put curly braces around blocks in loops and conditionals
 * Prohibits the use of `==` and `!=` in favor of `===` and `!==` (any time you're checking a `typeof` result you should use `==` and just ignore any warnings about using `===` because `typeof` ALWAYS returns a String so no need for the strict equality check)
 
-One error you might see is the one asking you to use `hasOwnProperty` when checking properties inside of a `for in` loop. 99% of the time you'll know it wont be an issue, but if you start extending natives (such as `Array`) then you open yourself up to the possibility of un-intended results that cause your code to error.
-
-###Configuration
-
-The configuration file for JSHint is as follows… 
-
-```js
-{
-	// Settings
-    'passfail'      : false,  // Stop on first error.
-    'maxerr'        : 200,    // Maximum error before stopping.
-
-
-    // Predefined globals whom JSHint will ignore.
-    'browser'       : true,   // Standard browser globals e.g. `window`, `document`.
-
-    'node'          : false,
-    'rhino'         : false,
-    'couch'         : false,
-    'wsh'           : false,   // Windows Scripting Host.
-
-    'jquery'        : true,
-    'prototypejs'   : false,
-    'mootools'      : false,
-    'dojo'          : false,
-
-    'predef'        : [  // Custom globals.
-    	// this is because we use require() from RequireJS library
-        'require',
-        'define',
-        
-        // this is because we use Jasmine BDD for unit-testing
-        'jasmine',
-        'describe',
-        'beforeEach',
-        'afterEach',
-        'it',
-        'expect'
-    ],
-
-
-    // Development.
-    'debug'         : false,  // Allow debugger statements e.g. browser breakpoints.
-    'devel'         : false,  // Allow developments statements e.g. `console.log();`.
-
-
-    // ECMAScript 5.
-    'es5'           : true,   // Allow ECMAScript 5 syntax.
-    'strict'        : false,  // Require `use strict` pragma  in every file.
-    'globalstrict'  : false,  // Allow global 'use strict' (also enables 'strict').
-
-
-    // The Good Parts.
-    'asi'           : false,  // Tolerate Automatic Semicolon Insertion (no semicolons).
-    'laxbreak'      : true,   // Tolerate unsafe line breaks e.g. `return [\n] x` without semicolons.
-    'bitwise'       : true,   // Prohibit bitwise operators (&, |, ^, etc.).
-    'boss'          : true,   // Tolerate assignments inside if, for & while. Usually conditions & loops are for comparison, not assignments.
-    'curly'         : true,   // Require {} for every new block or scope.
-    'eqeqeq'        : true,   // Require triple equals i.e. `===`.
-    'eqnull'        : false,  // Tolerate use of `== null`.
-    'evil'          : false,  // Tolerate use of `eval`.
-    'expr'          : false,  // Tolerate `ExpressionStatement` as Programs.
-    'forin'         : false,  // Tolerate `for in` loops without `hasOwnPrototype`.
-    'immed'         : true,   // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
-    'latedef'       : true,   // Prohipit variable use before definition.
-    'loopfunc'      : false,  // Allow functions to be defined within loops.
-    'noarg'         : true,   // Prohibit use of `arguments.caller` and `arguments.callee`.
-    'regexp'        : false,  // Prohibit `.` and `[^...]` in regular expressions.
-    'regexdash'     : false,  // Tolerate unescaped last dash i.e. `[-...]`.
-    'scripturl'     : true,   // Tolerate script-targeted URLs.
-    'shadow'        : true,   // Allows re-define variables later in code e.g. `var x=1; x=2;`.
-    'supernew'      : false,  // Tolerate `new function () { ... };` and `new Object;`.
-    'undef'         : true,   // Require all non-global variables be declared before they are used.
-
-
-    // Personal styling preferences.
-    'newcap'        : true,   // Require capitalization of all constructor functions e.g. `new F()`.
-    'noempty'       : true,   // Prohibit use of empty blocks.
-    'nonew'         : true,   // Prohibit use of constructors for side-effects.
-    'nomen'         : true,   // Prohibit use of initial or trailing underbars in names.
-    'onevar'        : false,  // Allow only one `var` statement per function.
-    'plusplus'      : false,  // Prohibit use of `++` & `--`.
-    'sub'           : false,  // Tolerate all forms of subscript notation besides dot notation e.g. `dict['key']` instead of `dict.key`.
-    'trailing'      : false,  // Prohibit trailing whitespaces.
-    'white'         : true,   // Check against strict whitespace and indentation rules.
-    'indent'        : 4,      // Specify indentation spacing
-    'smarttabs'		: true	  // Suppress warnings about mixed tabs and spaces
-}
-```
+One error JSHint might raise is your lack of `hasOwnProperty` usage when checking properties inside of a `for in` loop. 99% of the time you'll know it wont be an issue, but if you start extending natives (such as `Array`) then you open yourself up to the possibility of un-intended results that cause your code to error.
 
 ##Build process
 
@@ -590,7 +567,7 @@ A build tool/script/process is a way of making your code/project as efficient an
 
 ###JavaScript Build Script
 
-For our JavaScript, because we use AMD and specifically [RequireJs](http://requirejs.org/), we also use RequireJs' own build script which is called 'r.js'.
+For our JavaScript, because we use AMD and specifically [RequireJS](http://requirejs.org/), we also use RequireJS' own build script which is called 'r.js'.
 
 The way 'r.js' works is that you execute a configuration file via the command line (using either Java or Node.js)
 
@@ -622,40 +599,30 @@ One way to cache results of a heavy computation is through memoization. One thin
 /**
  * The following method creates a new element or returns a copy of an element already created by this script.
  *
- * @param tagname { String } element to be created/copied
- * @return { Node } the newly created element node
+ * @param tagname {string} element to be created/copied
+ * @return {node} the newly created element node
  */
 var createElement = (function(){
-	// Memorize previous elements created
-	var cache = {};
+    // Memorize previous elements created
+    var cache = {};
 	
-	return function(tagname) {
-		if (!(tagname in cache)) {
-			// Create new instance of specified element and store it
-			cache[tagname] = document.createElement(tagname);
-		}
+    return function (tagname) {
+        if (!(tagname in cache)) {
+            // Create new instance of specified element and store it
+            cache[tagname] = document.createElement(tagname);
+        }
 		
-		// If we've already created an element of the specified kind then duplicate it
-		return cache[tagname].cloneNode(false);
-	}
+        // If we've already created an element of the specified kind then duplicate it
+        return cache[tagname].cloneNode(false);
+    }
 }());
 ```
 
 For testing performance use the online tool [jsPerf](http://jsperf.com/). It lets you write different test cases for a particular piece of code. For example if you wanted to see if a `while` loop was faster than a `for` loop then you would write a test that executed both loops against a familiar piece of code and jsPerf would execute that code repeatedly to see which variation performed better (e.g. [while vs for](http://jsperf.com/yet-another-for-vs-while/2))
 
-##Unit testing
-
-Testing your code is very important and we should all do it more. 
-
-But we appreciate why this doesn't happen as often as it should.
-
 ###Test-Driven Development (TDD)
 
-Unit testing and Test-Driven Development are two different things. Do not get them confused.
-
-If you write code and then decide to write tests for that code: **you are doing 'unit testing'**. 
-
-If you write tests (without any code to test against) and then you write enough code to make the tests pass and you 'rinse/repeat' that process until you have your code base complete: **you are doing 'test-driven development'**.
+Testing your code is very important and ideally any non-trivial application code should be written with tests first.
 
 ###Testing frameworks
 
@@ -670,7 +637,9 @@ Some of interest…
 * [QUnit](http://docs.jquery.com/QUnit)
 * [Sinon](http://sinonjs.org/) (this is an add-on to testing frameworks for Spies/Stubs/Mocks)
 
-Another testing tool is called [Testling](http://testling.com/) which is a command line tool and lets you test your code against a suite of browsers without needing to have them installed (it tests them remotely). Testling can be used as follows… 
+Another testing tool is called [Testling](http://testling.com/) which is a command line tool and lets you test your code against a suite of browsers without needing to have them installed (it tests them remotely). 
+
+Testling can be used as follows… 
 
 ```js
 /*
@@ -705,11 +674,11 @@ test('the test name', function (t) {
 
 ##jQuery
 
-If you're using jQuery then there are only a few rules to abide by...
+If you're using jQuery (these rules could potentially still be beneficial to Ender users) then there are only a few rules to abide by...
 
 ###Cache jQuery instances at all possible points 
  
-```
+```js
 var test = $('#js-element');
 test.addClass('is-active');
 test.removeClass('is-hidden');
@@ -722,7 +691,7 @@ $('#js-element').removeClass('is-hidden');
 // PLUS YOU'RE UNNECESSARILY LOOKING UP THE SAME ELEMENT TWICE
 ```
 
-###Avoid jQuery's `.css()` method as that creates an 'inline style' which can be an expensive DOM interaction - instead aim to use `.addClass()`  
+###Avoid jQuery's `.css()` method as that creates an 'inline style' which can be an expensive DOM interaction and can cause your style sheets to break in unexpected ways. Instead aim to use `.addClass()`  
 
 ```
 var test = $('#js-element');
@@ -738,7 +707,6 @@ test.addClass('is-highlighted'); // .is-highlighted is set via your CSS
 
 ###Use the latest API 
 e.g. avoid `.click()` and use `.on()` instead
-
 
 ###Use event delegation where ever possible 
 Do not have multiple individual `click` events for one element - e.g. click event for every `<li>` in a un-ordered list
