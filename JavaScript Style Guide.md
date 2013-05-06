@@ -14,6 +14,7 @@ Here is what we'll cover:
 	* Comments
 	* File structure
 	* Constructors
+	* Arguments
 	* Loops
 	* Ternary operator
 	* Spacing
@@ -171,6 +172,18 @@ console.log('unknown', unknown.name);
 ```
 
 ...this can be done with all constructors, whether they are custom user objects or built-in host objects, for example: `new Date` rather than `new Date()`
+
+###Arguments
+
+When passing parameters/arguments to a function you do not need to declare a variable for that specific argument. For example...
+
+```js
+function test(a) {
+    a = a || 'no argument provided';
+}
+```
+
+...notice in the above example we haven't declared `a` as a variable within the function like so: `var a = a || 'no argument provided'` which we would normally do to prevent a global variable being created. This is because when the function is called by the user the arguments (and any variables declared within the function) are added automatically to the 'Activation Object' when the execution context changes. For more information on this [see this gist](https://gist.github.com/Integralist/1525419)
 
 ###Loops
 
