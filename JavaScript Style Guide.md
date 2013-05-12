@@ -12,7 +12,9 @@ Here is what we'll cover:
 * Style
 	* Basics
 	* Comments
+	* Code smells
 	* File structure
+	* Function direction
 	* Constructors
 	* Arguments
 	* Loops
@@ -93,6 +95,33 @@ For longer comments then use a multi-line comment...
  */
 ```
 
+###Code smells
+
+It's probably a bit too early to discuss good code design and architecture but the preceeding section about how to write comments is actually misleading in the sense that you should never need to write code comments in the first place! 
+
+Your code should be so well designed that the code speaks for itself and is requires no additional clarity.
+
+It was said best...
+
+> “The proper use of comments is to compensate for our failure to express ourself in code. Clear & expressive code with few comments is far superior to cluttered & complex code with lots of comments”  
+  - Robert C. Martin, Clean Code
+  
+There are only a few instances where I would suggest you write code comments and that is for the purpose of automated documentation generation and for specific hacks you've needed to implement.
+
+This leads into the following quote…
+
+> “The smaller and more focused a function is, the easier it is to choose a descriptive name”  
+  - Robert C. Martin's "Clean Code Collection"
+
+…if you keep functions abiding by the Single Responsibility Principle (SRP) then you should be able to name them accurately enough to not require a code comment to describe the code within the function.
+
+When writing a function also try to limit the need to pass an argument to the function as this indicates two things:
+
+1. the function will be harder to write tests for (as you may need separate tests for each scenario variation where different or incorrect number of arguments are provided when calling the function)
+2. if the argument is a 'flag' (i.e. a Boolean true/false) argument this is an instant code smell because it immediately announces the funciton does more than one thing and so fails SRP.
+
+Other code smells are `switch` statements: they violate the Open-Closed & Single Responsibility principles. The best way to deal with a situation where you have a long `switch` statement is to abstract it in to another method or Factory method.
+
 ###File structure
 
 * __Code Structure__  
@@ -110,6 +139,7 @@ This is where the main crux of the function's code will sit
 /**
  * Code Structure:
  * - Variables
+ * - Initialisation
  * - Functions
  *   - fn_name_1
  *   - fn_name_2
@@ -120,7 +150,6 @@ This is where the main crux of the function's code will sit
  *   - fn_name_7
  *   - fn_name_8
  *   - fn_name_9
- * - Initialisation
  */
 
 /**
@@ -133,12 +162,12 @@ This is where the main crux of the function's code will sit
 function my_function (abc, xyz) {
 	var name = 'Mark';
 	var location = 'England';
+	
+	// main code for this function
 		
 	function do_something (with_this) {
 		// do something
 	}
-	
-	// main code for this function
 }
 
 /**
@@ -152,6 +181,42 @@ function my_function (abc, xyz) {
 	// main code for this function
 }
 ```
+
+###Function direction
+
+Your code should follow a top-down direction. By this I mean it should be possible for a user to read your code like a novel, moving from one logical section on to another.
+
+Like so...
+
+```js
+thisIsMyFunction();
+
+function thisIsMyFunction() {
+    var a = 1,
+        b = 2,
+        c = 3;
+
+    init();
+
+    function init() {
+        // do some initialisation stuff
+        
+        anotherThing();
+    }
+
+    function anotherThing() {
+        return a + b + c;
+    }
+}
+```
+
+…notice how you can follow the code like a story. 
+
+First we call the function `thisIsMyFunction` which itself carries out some variable set-up and then calls the inner `init` function. 
+
+The `init` function does some stuff and then calls the `anotherThing` function which follows directly after `init`.
+
+The code flows (and reads) in one logical direction (top to bottom).
 
 ###Constructors
 
