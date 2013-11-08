@@ -10,7 +10,8 @@ Here is what we'll cover:
 - Terminology
 - Style
 - Sass
-- Object-Oriented CSS (OOCSS) BEM
+- Object-Oriented CSS (OOCSS) via BEM
+- Padding, margin, borders
 - Abstractions?
 - Comments
 - Mobile first
@@ -84,8 +85,9 @@ Use the [Sass](http://sass-lang.com/) pre-processor via the command line.
 There are a couple of rules to try and abide to when using Sass:
 
 * Use Sass to make you more productive - don't use all its features (functions/loops/mixins etc) just for the sake of it
-* Avoid `@extend` as it can _potentially_ be a cause of bloated CSS - aim for more abstracted code (OOCSS)
+* Avoid `@extend` (where possible) as it can _potentially_ be a cause of bloated CSS (unless you're extending a placeholder: `%someContent { color: red; }`) -> but in general aim for more abstracted code (OOCSS)
 * Use `@import` in your top level `.scss` files only (where possible) - nested `@import` statements can get confusing otherwise
+* Use single quotes when referencing strings (e.g. `@import 'guts/base'` and not `@import "guts/base"`)
 * When using a mixin, make sure that you group all mixins at the top of the rule like so...
     ```scss
     .my-rule {
@@ -98,6 +100,7 @@ There are a couple of rules to try and abide to when using Sass:
     }
     ```
 * Don't nest selectors as this can result in badly performing selectors - if you need to nest then make sure you understand the CSS that nested selectors generates
+* If you _must_ nest selectors/rules then do not go further than 3 levels deep.
 * Use braces and proper CSS formatting (some pre-processors allow you to ignore braces - this makes code hard to read for others not familiar with the syntax)
 * Use the `&` character to reference the parent selector (this is also very useful for IE fixes - where you use the `&` character at the end of your selector to have wrapped by the specific parent selector. If that sounds confusing then [here is an example](https://gist.github.com/3226822).
 * __DO NOT__ do this (it's pointless and doesn't add any benefit)...  
@@ -115,6 +118,73 @@ There are a couple of rules to try and abide to when using Sass:
         @extend %something-placeholder;
     }
     ```
+
+### Order of a rule's content...
+
+List `@extend`(s) First:
+
+```scss
+.weather {
+  @extends %module; 
+  ...
+}
+```
+
+List `@include`(s) Next
+
+```scss
+.weather {
+  @extends %module; 
+  @include vendor(transition, all 0.3s ease-out);
+  ...
+}
+```
+
+List "Regular" Styles Next
+
+```scss
+.weather {
+  @extends %module; 
+  @include vendor(transition, all 0.3s ease-out);
+  color: red;
+}
+```
+
+Nested Selectors Last
+
+```scss
+.weather {
+  @extends %module; 
+  @include vendor(transition, all 0.3s ease-out);
+  
+  color: red;
+
+  > p {
+    // not that you would use a nested selector here (you'd be using BEM to try and negate a need for nested rule)
+  }
+}
+```
+
+### List Vendor/Global Dependancies First, Then Author Dependancies, Then Patterns, Then Parts
+
+```scss
+/* Vendor Dependencies */
+@import "compass";
+
+/* Authored Dependencies */
+@import "global/colors";
+@import "global/mixins";
+
+/* Patterns */
+@import "global/tabs";
+@import "global/modals";
+
+/* Sections */
+@import "global/header";
+@import "global/footer";
+```
+
+The dependencies like Compass, colors, and mixins generate no compiled CSS at all, they are purely code dependancies. Listing the patterns next means that more specific "parts", which come after, have the power to override patterns without having a specificity war.
 
 ###Some basic styling examples... 
 
@@ -172,12 +242,13 @@ There are a couple of rules to try and abide to when using Sass:
 }
 ```
 
-##Object-Oriented CSS (OOCSS) - BEM
+##Object-Oriented CSS (OOCSS) via BEM
 
 Use OOCSS to ensure stylesheets are as flexible and easily maintainable as possible.
 
 An OOCSS methodology can make your CSS much more scalable, flexible and maintainable but is a bit of a large subject to cover, so for more information I **strongly** advise you to read the following posts...
 
+- [Maintainable CSS with BEM](http://www.integralist.co.uk/posts/maintainable-css-with-bem/)
 - [Getting your head around BEM syntax](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
 - [Code smells in CSS](http://csswizardry.com/2012/11/code-smells-in-css/)
 - [Using more classes in your HTML](http://csswizardry.com/2012/10/a-classless-class-on-using-more-classes-in-your-html/)
@@ -188,8 +259,181 @@ A couple of quick points that are important to remember:
 * Abstract common design patterns (see 'Abstractions?' section below)
 * Avoid making your components too brittle/tightly coupled  
 e.g. don't set dimensional properties such as `width` (components should fill whatever space they are placed within)
+* Layout properties (i.e. properties that affect layout, such as width/height/position/left/right/float etc) should be "opt-in" via a modifier (e.g. `.block__element--modifier` => `.module__img--left`). That way your module can be moved to any page, any section, any where and not break as the dimensions of the module should stretch to fit its container. 'Layout' properties break that fundamental requirement so the dev should specifically set those via opt-in modifiers.
 * Make sure your selectors are as specific as they need to be  
 e.g. A good way to know if you should create a specific class or target the element directly is to ask yourself the question: "am I selecting this because it’s a `ul` inside of `.header` or because it is my site’s main nav?"
+
+###Some BEM naming guidelines
+####Blocks
+When building a 'component', the block name should be a succinct name for the component. 
+
+For example, if you have a component called 'Related Links' then give it a block name of `related-links`.
+
+When working with 'components' try to avoid the following conventions `<div class="component__related-links">` or `<div class="component component__related-links">`. 
+
+The reason being: if you do have styles that are reusable within multiple components then internalise those styles like so...
+
+```sass
+%component-border {
+    border: 1px solid red;
+}
+
+.related-links {
+    @extend %component-border;
+
+    // other styles specific to related links
+}
+```
+
+...that way components avoid the issue where the naming convention of `component__something` forces the `something` component to inherit styles it might not necessarily need. If that situation occurred then you'd either have to go back and change the naming convention for all components OR for this one component change the naming convention to just `something` so it didn't inherit styles from `component` (which would be terrible for consistency and maintainability). 
+
+Don't do it. Keep component names unique and use `@extend` to allow you to pass through styles you want.
+
+####Elements
+An element is a container within a block and can never appear outside of a container with the block name on. For example a title element on the related links component:
+
+```html
+<div class="related-links"></div>
+<div class="related-links__title"></div>
+```
+**WRONG** - An element should never appear outside of it's block. 
+
+```html
+<div class="related-links">
+    <div class="related-links__title"></div>
+</div>
+```
+**GOOD** - The title element on the related-links block is contained inside it.
+
+####Block elements vs blocks within blocks
+They are both valid, but each should be used differently. The key is that a block is entirely self contained and can live and work on it's own correctly. An element is intrinsically related to it's block and can't work without it. So use an element if it only ever appears in it's containing block and use a block within a block if it's a further abstraction outside of the original component/block (something that is used in many places).
+
+Simple Block element example
+```html
+<div class="related-links">
+    <div class="related-links__title"></div>
+    <a href="/some-link" class="related-links__link"></div>
+</div>
+```
+
+Block within block (complex-link inside related-link)
+```html
+<div class="related-links">
+    <div class="related-links__title"></div>
+    <a href="/some-link" class="complex-link">
+        <img src="some-img.jpg" class="complex-link__image"/>
+        <div class="complex-link__text"></div>
+    </div>
+</div>
+```
+
+The examples are a bit contrived and the semantics not the best but hopefully you get the idea.
+
+####Elements within elements from the same block
+There are no strict rules around this, but generally it indicates poor naming/design and implies that the block itself is too complex by having a hierarchy that's too big. Instead of: 
+```html
+<div class="related-links">
+    <div class="related-links__title"></div>
+    <a href="/some-link" class="related-links__link">
+        <h3 class="related-links__link__title"></h3>
+    </a>
+</div>
+```
+
+consider (block within block):
+```html
+<div class="related-links">
+    <div class="related-links__title"></div>
+    <a href="/some-link" class="complex-link">
+        <h3 class="complex-link__title"></h3>
+    </a>
+</div>
+```
+
+The rules around blocks being separate entities still apply here. This route encourages creation of smaller blocks which are easier to reuse instead of one large block which does too much. If/when a pattern is established between this and another block, the 'related-links-link' block element could then be renamed to something like 'text-link' easily by removing the link between the two blocks from the similar block names.
+
+The first example is valid, but it's difficult to draw a clear line between when it's ok and when the block is too complex, so use your best judgement.
+
+#### Modifiers
+Modifiers should only be applied to an element if the block or element class already exists on the element. If you find yourself wanting to do this, drop the modifier and just create a new block or element. Modifiers indicate a change from what is provided by the block/element by default.
+```html
+<div class="related-links--large"></div>
+<!--WRONG-->
+```
+
+```html
+<div class="related-links related-links--large"></div>
+<!--CORRECT-->
+```
+
+```html
+<div class="related-links">
+    <div class="related-links__title--emphasise"></div>
+</div>
+<!--WRONG-->
+```
+
+```html
+<div class="related-links">
+    <div class="related-links__title related-links__title--emphasise"></div>
+</div>
+<!--CORRECT-->
+```
+
+Multiple modifiers on a block/element are perfectly valid. So for example, the following is ok:
+```html
+<div class="related-links related-links--large related-links--left"></div>
+```
+
+##Padding, margin, borders
+Unless there is a good reason otherwise, where either a padding, margin or a border gives the desired results, white space between elements should be defined with a margin. 
+
+An example of when padding is appropriate is if you wanted to create white space to help make the hit state on a link bigger. In that instance you would use padding on the link instead of a margin.
+
+###Margin direction
+We should aim to create margins in one direction as per advice from Harry Roberts (http://csswizardry.com/2012/06/single-direction-margin-declarations/). 
+
+As for vertical spacing we should create margins as a **margin-top** instead of margin-bottom. The reason behind this is mainly to do with compatibility with older browsers. 
+
+For example when creating a vertical list of items, we often want a consistent amount of spacing between items. So the first and last elements would need to have their margin removed.
+
+If we were to use margin-bottom, we would need to do the following:
+
+```css
+.list-item {
+    margin-bottom: 4px;
+}
+
+list-item:last-child {
+   margin-bottom: 0;
+}
+```
+
+or
+
+```css
+.list-item:not(:last-child) {
+    margin-bottom: 4px;
+}
+```
+
+Both of these are not good solutions as they rely on the usage of CSS3 selectors which aren't necessarily needed but more importantly aren't supported as widely as alternative solutions. 
+
+Instead consider `margin-top`:
+
+```css
+.list-item + .list-item {
+    margin-top: 4px;
+}
+```
+
+Sibling selectors (adjacent sibling in this case) are CSS 2.1 so this will be more widely supported (this includes IE8). 
+
+This solution also has the benefit of not having to undo a style which is preferable because it removes a potential specificity problem. The adjacent selector does out right have a higher specificity, but not at the cost of unsetting a style which is better.
+
+If you do have to remove a margin-top then you can still use first-child which is also a CSS 2.1 selector.
+
+As for left and right margin, I don't think we have a clear reason to use either for the time being, so use margin-right where either are valid in the name of consistency. 
 
 ##Abstractions?
 
