@@ -36,7 +36,7 @@
 - Use _ for unused block parameters (see example below).
 - Don't use the `===` operator to check types (unlike in JS where it's a good thing). **NOTE** use duck-typing instead of explicitly checking the type of an object (which is a code smell). `===` is mostly an implementation detail to support Ruby features like `case`. For example, `String === "hi"` is `true` and `"hi" === String` is `false`. Instead, use `is_a?` or `kind_of?` *if you must*.
 - The names of predicate methods (methods that return a boolean value) should end in a question mark. (i.e. `Array#empty?`).
-- The names of potentially "dangerous" methods (i.e. methods that modify `self` or the arguments, `exit!`, etc.) should end with an exclamation mark.
+- The names of potentially "dangerous" methods (i.e. typically modify the object they’re being used on, i.e. String#strip!) should end with an exclamation mark.
 - Prefer the use of Class 'instance' variables `@variable` over Class variables `@@variable`.
 - Use Symbols `:name` over Strings `'name'` wherever possible.
 - Use `Set` instead of `Array` when dealing with unique elements. `Set` implements a collection of unordered values with no duplicates. This is a hybrid of `Array`'s intuitive inter-operation facilities and `Hash`'s fast lookup.
@@ -124,7 +124,7 @@ user = {
 
 ## Testing
 
-For unit testing your Ruby code we recommend either [RSpec](http://rspec.info/) or [Cucumber](http://cukes.info/).
+For unit testing your Ruby code we recommend either [RSpec](http://rspec.info/) or [Cucumber](http://cukes.info/) although both can be used within a single project.
 
 ## Version Switching
 
