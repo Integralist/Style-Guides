@@ -1,6 +1,19 @@
+<<<<<<< HEAD
 # JavaScript Style Guide
 
 * Principles
+=======
+#JavaScript Style Guide
+
+This is my own personal style guide for writing JavaScript. 
+
+Feel free to take the bits you like and/or modify to your own style.
+
+One thing to be aware of is that throughout this guide, to illustrate our style over another, we will mark something as 'bad' and then mark what we prefer as 'good'. We're fully aware that this is not the best choice of phrase because one way isn't necessarily 'bad', it's just not our preferred way.
+
+Here is what we'll cover:
+
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 * Terminology
 * Style
 	* Basics
@@ -27,6 +40,7 @@
 * Test-Driven Development (TDD)
 	* Testing frameworks
 * jQuery
+<<<<<<< HEAD
 * ES5 (ECMAScript 5.0)
 
 ## Principles
@@ -34,6 +48,9 @@
 We want each JavaScript file to be a re-usable module/component, safely decoupled from other modules/components and which encapsulates its logic in a clean and object-oriented format.
 
 We should take advantage of abstractions and good object-oriented design principles. We should implement best practices and utilise pub/sub communication between modules/components wherever possible.
+=======
+
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 ##Terminology
 
@@ -45,7 +62,11 @@ expression          | An expression is a command that the JavaScript engine can 
 statement           | A statement is a command that can be executed (statements are terminated with a semicolon)
 identifier          | A name (e.g. variable name, function name, labels for loops).
 function declaration| `function myFunction(){ /* code */ }`
+<<<<<<< HEAD
 function expression | `var myFunction = function() { /* code */ };`
+=======
+function expression | `var myFunction = function(){ /* code */ };`
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 primitive           | `undefined`, `null`, `boolean`, `string` and `number`
 operator            | `+`, `-`, `!`, `++`, `===`, `&&`, `typeof`
 
@@ -54,6 +75,7 @@ operator            | `+`, `-`, `!`, `++`, `===`, `&&`, `typeof`
 ###Basics
 
 * Always use semicolons (controversial nowadays) - do not rely on the JavaScript engine to handle ASI ('*Automatic Semicolon Insertion*').
+<<<<<<< HEAD
 * Use single quotes `''` instead of double quotes `""` as they look cleaner/clearer when scaning code (the only exception to this rule is when you're adding a sentence/paragraph of text, then you're OK to use double quotes as you're more likely to need to escape a `'` than `"` -  
 e.g `"They're going to have to escape some single quotes unless I'm wrapping this in double quotes"`).
 * Never mix spaces and tabs (use spaces).
@@ -80,6 +102,15 @@ e.g `"They're going to have to escape some single quotes unless I'm wrapping thi
         //
     }
     ```
+=======
+* Use single quotes `''` instead of double quotes `""` as they look cleaner/clearer when scaning code (the exception to this rule is when you're adding a string of text, as you're more likely to need to escape a `"` than `'` -  
+e.g `"I'm stuck here until they're finished working"`).
+* Never mix spaces and tabs.
+* Use four spaces to represent a single tab.
+* Use multiple var statements (not one var statement for multiple variables - let your minifier/build script handle that for you)
+	* With the exception of variables that have no value: `var name, age, location;` and these should come last in the list of variables.
+* Only use a function expression `var x = function(){};` when you absolutely must (e.g. when you need to execute a function immediately and store its return value `var x = (function(){ /* some expensive operation*/ return 'results of operation'; }());`). Otherwise use a function declaration instead.
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 ###Comments
 
@@ -177,6 +208,7 @@ This is where the main crux of the function's code will sit
  * @param abc {string} describe what this argument is
  * @param xyz {number} describe what this argument is
  */
+<<<<<<< HEAD
 function myFunction(abc, xyz) {
 	var name = 'Mark',
 	    location = 'England';
@@ -184,6 +216,15 @@ function myFunction(abc, xyz) {
 	// main code for this function
 		
 	function doSomething(with_this) {
+=======
+function my_function (abc, xyz) {
+	var name = 'Mark';
+	var location = 'England';
+	
+	// main code for this function
+		
+	function do_something (with_this) {
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 		// do something
 	}
 }
@@ -195,7 +236,11 @@ function myFunction(abc, xyz) {
  * @param abc {string} describe what this argument is
  * @param xyz {number} describe what this argument is
  */
+<<<<<<< HEAD
 function myFunction(abc, xyz) {
+=======
+function my_function (abc, xyz) {
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 	// main code for this function
 }
 ```
@@ -243,7 +288,11 @@ When using a constructor to create new objects (note: just to clarify, JavaScrip
 If you have no options to pass to the constructor function then make sure that you leave off the parenthesis around the function invocation...
 
 ```js
+<<<<<<< HEAD
 function Company(name) {
+=======
+function Company (name) {
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
   this.name = name || 'No name supplied';
 }
 
@@ -290,7 +339,11 @@ while (len--) {
 }
 ```
 
+<<<<<<< HEAD
 …but if you're worried about your `while` loop going backwards, you can still go forwards and have it look cleaner than the `for` loop…
+=======
+…but if you're worried about your `while` loop going backwards, you can still go forwards and have it look cleaner than the `for` loop (IMO)…
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 ```js
 var arr = ['a', 'b', 'c'];
@@ -324,6 +377,7 @@ if (condition) {
 
 ###Spacing
 
+<<<<<<< HEAD
 ```js
 // No space before parenthesis, one space after parenthesis
 
@@ -340,6 +394,25 @@ var myFunction = function() {
 };
 
 var myFunction = function(a, b, c) {
+=======
+Our style of spacing is a little more complicated than most because the choice of spacing changes depending on the context… 
+
+```js
+// No arguments: no space around parenthesis
+
+function my_function(){
+	// code
+}
+var my_function = function(){
+	// code
+};
+
+// Arguments: keep a single space around parenthesis
+function my_function (a, b, c) {
+	// code
+}
+var my_function = function (a, b, c) {
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 	// code
 };
 
@@ -359,7 +432,11 @@ for (condition) {
 
 ```js
 // This is a function taken from Underscore.js
+<<<<<<< HEAD
 function bind(func, context) {
+=======
+function bind (func, context) {
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 	
     var bound, args;
 	
@@ -373,7 +450,11 @@ function bind(func, context) {
     
     args = slice.call(arguments, 2);
     
+<<<<<<< HEAD
     return bound = function() {
+=======
+    return bound = function(){
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
     
         if (!(this instanceof bound)) {
             return func.apply(context, args.concat(slice.call(arguments)));
@@ -431,10 +512,21 @@ For full details see [http://webreflection.blogspot.co.uk/2010/10/javascript-coe
 
 ###Naming Conventions
 
+<<<<<<< HEAD
 Define long variable names using underscores to separate words… 
 
 ```js
 var user_location = 'England';
+=======
+Define long names using an underscore as it is easier to read… 
+
+```js
+var user_location = 'England';
+
+function get_user_location(){
+    // code
+}
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 ```
 
 ###Returning a value
@@ -452,6 +544,7 @@ There are many Promise libraries available. The most popular being [When.js](htt
 ```js
 define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?author=xxxx&alt=json'], function (when, swf, videos) {
 
+<<<<<<< HEAD
     var global = (function(){return this;}()),
         doc = document,
         id = videos.feed.entry[0].id.$t.split('videos/')[1],
@@ -462,6 +555,18 @@ define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?au
     function async(template) {
         var dfd = when.defer(),
             tmp, timer;
+=======
+    var global = (function(){return this;}());
+    var doc = document;
+    var id = videos.feed.entry[0].id.$t.split('videos/')[1];
+    var flash = doc.createElement('div');
+    var container = doc.getElementsByTagName('div')[2];
+    var params, atts;
+
+    function async (template) {
+        var dfd = when.defer();
+        var tmp, timer;
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 		
         template({ 
             title: 'Flash content inserted via JavaScript using a template to render content'
@@ -471,7 +576,11 @@ define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?au
             Because template() function is asynchronous (and no callback built-in)
             we use a timer to keep track of 'tmp' value
          */
+<<<<<<< HEAD
         timer = global.setInterval(function() { 
+=======
+        timer = global.setInterval(function(){ 
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
             (!!tmp) 
                 ? (global.clearInterval(timer), dfd.resolve(tmp)) 
                 : null; 
@@ -480,12 +589,21 @@ define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?au
         return dfd.promise;
     }
 		
+<<<<<<< HEAD
     function handler() {
         require(['tpl!../Templates/Video.tpl'], function (template) {
 			
             when(async(template), function(htmlFragment) {
                 var frag = doc.createDocumentFragment(),
                     div = doc.createElement('div');
+=======
+    function handler(){
+        require(['tpl!../Templates/Video.tpl'], function (template) {
+			
+            when(async(template), function (htmlFragment) {
+                var frag = doc.createDocumentFragment();
+                var div = doc.createElement('div');
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 				
                 div.innerHTML = htmlFragment;
                 frag.appendChild(div);
@@ -505,7 +623,11 @@ define(['when', 'swfobject', 'async!http://gdata.youtube.com/feeds/api/videos?au
 });
 ```
 
+<<<<<<< HEAD
 Note: Promises/Deferred objects are built-into jQuery since version 1.5 (see the use of `when` and `then` methods - which are also chainable).
+=======
+Note: Promises/Deferred objects are available with jQuery and also the latest release of Ender's Reqwest library has now got Promises support built-in.
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 ##DOM (Document Object Model)
 
@@ -516,17 +638,28 @@ Make sure you cache DOM elements and properties/values and re-use elements where
 For example, if you create an element `var div = document.createElement('div')` and you find you need another `div` element then just re-use that previous variable `var new_div = div.cloneNode();` and if you're referencing a property (or method) such as `document` more than twice then make sure you store it in a variable… 
 
 ```js
+<<<<<<< HEAD
 var doc = document,
     element_a = doc.getElementById('testA'),
     element_b = doc.getElementById('testB'),
     divs = doc.getElementsByTagName('div');
+=======
+var doc = document;
+var element_a = doc.getElementById('testA');
+var element_b = doc.getElementById('testB');
+var divs = doc.getElementsByTagName('div');
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 ```
 
 When adding style settings to an element use a `class` instead… 
 
 ```js
 var element = doc.getElementById('test');
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 // Bad
 element.style.border = '1px solid red';
 element.style.backgroundColor = 'yellow';
@@ -550,6 +683,7 @@ JavaScript templating is related to the DOM in that it allows you to insert dyna
 
 Typically HTML is rendered server-side rather than client-side (as client-side rendering can be a performance issue on mobile devices with good JavaScript support but poor hardware). But if you must do HTML generation/template rendering on the client-side then use a template library such as [Hogan.js](http://twitter.github.com/hogan.js/) or [Handlebars.js](http://handlebarsjs.com/)
 
+<<<<<<< HEAD
 Note: if you're requirements are quite basic then you don't need these massive templating libraries (see above links), but instead you can use plain vanilla javascript to handle basic interpolation of data to a structure, see this [tweet sized template engine](http://mir.aculo.us/2011/03/09/little-helpers-a-tweet-sized-javascript-templating-engine/).
 
 Typically you will use JavaScript to locate HTML in your page and then update and display the content (note: you could also be creating HTML using `innerHTML` or via the DOM API). But this means that you now have HTML being written inside your JavaScript which goes against the tenet of 'separating your concerns'. 
@@ -557,6 +691,13 @@ Typically you will use JavaScript to locate HTML in your page and then update an
 Instead, any components within your page (which are required to be dynamically updated) should be placed inside separate template files which you load into memory using AJAX and then process those templates by passing in the relevant data and compiling the data into the template using JavaScript. Once rendered you can insert the template into the DOM.
 
 Here follows is an example of a template and how to render it using Hogan.js (ajax functionality provided by - but not a necessity - jQuery)… 
+=======
+Typically you will use JavaScript to locate HTML in your page and then update and display the content (note: you could also be creating HTML using `innerHTML` or via the DOM API). But this means that you now have HTML being written inside your JavaScript which goes against the tenet of 'separating your concerns'. 
+
+Instead you should have any components within your page (which are required to be dynamically updated) placed inside separate template files which you load into memory using AJAX and then process the templates by passing in the relevant data and compiling the date into the template via JavaScript, and once rendered you can insert the template into the DOM.
+
+Here follows is an example of a template and how to render it using Hogan.js… 
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 ```html
 <!-- this is a separate template file: example.tpl -->
@@ -566,6 +707,7 @@ Here follows is an example of a template and how to render it using Hogan.js (aj
 ```
 
 ```js
+<<<<<<< HEAD
 $.ajax({
     url: 'example.tpl',
     dataType: 'html',
@@ -580,6 +722,22 @@ $.ajax({
         div.innerHTML = content;
         frag.appendChild(div);
         container.insertBefore(frag, target);
+=======
+ajax({
+    url: 'example.tpl',
+    data: 'html',
+    onSuccess: function (data) {
+        var template = hogan.compile(data);
+        var content = template.render({ 
+            title: 'My Title' 
+        });
+        var frag = doc.createDocumentFragment();
+        var div = doc.createElement('div');
+		
+        div.innerHTML = content;
+        frag.appendChild(div);
+            container.insertBefore(frag, target);
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
     }
 });
 ```
@@ -589,15 +747,26 @@ $.ajax({
 Write your JavaScript to be AMD compatible. This means having multiple scripts written like 'modules' which you insert into your main script when needed… 
 
 ```js
+<<<<<<< HEAD
 require(['module_a', 'module_b', 'module_c'], function(a, b, c) {
+=======
+require(['module_a', 'module_b', 'module_c'], function (a, b, c) {
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
     // do something with the returned values from each module
 });
 ```
 
+<<<<<<< HEAD
 A module is written like so (notice we pass in `module_d` which is a 'dependency' for the module to run, so the dependency module is loaded before the callback function is executed)… 
 
 ```js
 define(['module_d'], function(d) {
+=======
+A module is written like so… 
+
+```js
+define(['module_d'], function (d) {
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
     // do something with module 'd' 
     // optionally return a value/object/function etc
@@ -608,7 +777,11 @@ define(['module_d'], function(d) {
 If you're building a basic prototype and don't require the full AMD modular code base then you can use an anonymous function to protect the global environment from stray variables and other settings… 
 
 ```js
+<<<<<<< HEAD
 (function(global) {
+=======
+(function (global) {
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 	
 	// code
 	
@@ -617,8 +790,11 @@ If you're building a basic prototype and don't require the full AMD modular code
 
 …but be aware that this is only useful for prototyping and not production code as there is no real organisation/structure of code with a basic anonymous function way.
 
+<<<<<<< HEAD
 You can also use the Strategy design pattern to implement more modular code without the need for AMD (or specifically the heavy duty AMD loaders such as RequireJS). See [this repo](https://github.com/Integralist/Dependency-Injection-in-JavaScript) for an example.
 
+=======
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 ##Application structure
 
 Having a clear and easy to undestand directory architecture is important. Don't just have all your JavaScript files dumped inside a single folder. Instead have a defined structure for your applications.
@@ -675,8 +851,11 @@ There are many build tools available, some of which are:
 
 As long as you're using some form of build script your application will be better for it.
 
+<<<<<<< HEAD
 For an example of using Grunt please see [this repo](https://github.com/Integralist/Grunt-Boilerplate).
 
+=======
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 ##Performance considerations
 
 Performance is a big issue but can easily turn into micro-optimisations.
@@ -684,7 +863,11 @@ Performance is a big issue but can easily turn into micro-optimisations.
 For example, some things you can do (which are definitely micro-opts):
 
 * Use `~~` over `Math.floor`
+<<<<<<< HEAD
 * Use reverse `while` loop instead of forward `for` loop (*BUT does have added bonus of being clearer to read/understand*)
+=======
+* Use reverse `while` loop instead of forward `for` loop (*BUT has the bonus of being clearer to read/understand*)
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 The best approach is to try and not to make things too complicated. But if you want to use some bizarre micro-optimisation technique then make sure you comment it well and include links to articles about the technique so that other developers who look at your code don't get confused as to what your cryptic piece of code means.
 
@@ -699,11 +882,19 @@ One way to cache results of a heavy computation is through memoization. One thin
  * @param tagname {string} element to be created/copied
  * @return {node} the newly created element node
  */
+<<<<<<< HEAD
 var createElement = (function() {
     // Memorize previous elements created
     var cache = {};
 	
     return function(tagname) {
+=======
+var createElement = (function(){
+    // Memorize previous elements created
+    var cache = {};
+	
+    return function (tagname) {
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
         if (!(tagname in cache)) {
             // Create new instance of specified element and store it
             cache[tagname] = document.createElement(tagname);
@@ -728,7 +919,11 @@ There are literally 'tons' of different testing frameworks available, some are '
 Some of interest… 
 
 * [Buster.Js](http://busterjs.org/) (and my personal favourite)
+<<<<<<< HEAD
 * [Jasmine](http://pivotal.github.com/jasmine/) (see an article I've written about [using Jasmine](http://integralist.co.uk/Beginners-guide-on-how-to-test-your-code-%28using-Jasmine-BDD%29.html) which also covers information about unit testing, the 'write first' process and TDD vs BDD).
+=======
+* [Jasmine](http://pivotal.github.com/jasmine/) (see an article I've written about [using Jasmine](https://github.com/Integralist/Blog-Posts/blob/master/Beginners-guide-on-how-to-test-your-code-%28using-Jasmine-BDD%29.md) which also covers information about unit testing, the 'write first' process and TDD vs BDD).
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 * [jsTestDriver](https://code.google.com/p/js-test-driver/)
 * [JsUnit](http://www.jsunit.net/)
 * [QUnit](http://docs.jquery.com/QUnit)
@@ -755,7 +950,11 @@ To check your usage (via command line):
 */
 var test = require('testling');
 
+<<<<<<< HEAD
 test('the test name', function(t) {
+=======
+test('the test name', function (t) {
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
     // See all test assertions here: 
     // http://testling.com/docs/#test-assertions
     
@@ -771,6 +970,7 @@ test('the test name', function(t) {
 
 ##jQuery
 
+<<<<<<< HEAD
 BBC Responsive News has shifted away from using Ender to using jQuery 2.0. The reason for moving to jQuery is for API consistency/parity, better documentation and all at approximately the same size. We use a specific custom build of jQuery which removes the following jQuery modules: sizzle, event-alias, effects, and deprecated. To find out what each module covers see: http://www.hongkiat.com/blog/jquery-remove-modules/. Also for desktop browsers (especially old IE's) we can utilise jQuery 1.9+ which will be kept in sync with the 2.0+ releases.
 
 ###jQuery usage?
@@ -780,17 +980,25 @@ At the moment we're still not 100% sure what the best solution is for using jQue
 From a performance point of view I would say limit the use of jQuery's API unless absolutely necessary, but from a practical point of view I would say it would make sense for us to utilise the jQuery code as we're paying the price for downloading/parsing it already.
 
 But, for right now we suggest limited use of jQuery because on top of the slight performance gains from using native JavaScript, it also means that if we decide to move away from using utility libraries (like jQuery) then the migration will be a lot simpler because the API we've written in will be mainly native JavaScript.
+=======
+If you're using jQuery (these rules could potentially still be beneficial to Ender users) then there are only a few rules to abide by...
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 ###Cache jQuery instances at all possible points 
  
 ```js
 var test = $('#js-element');
+<<<<<<< HEAD
     test.addClass('is-active');
     test.removeClass('is-hidden');
 
 // or use chaining:
 
     $('#js-element').addClass('is-active').removeClass('is-hidden');
+=======
+test.addClass('is-active');
+test.removeClass('is-hidden');
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 // DO NOT DO...
 $('#js-element').addClass('is-active');
@@ -818,7 +1026,11 @@ test.addClass('is-highlighted'); // .is-highlighted is set via your CSS
 e.g. avoid `.click()` and use `.on()` instead
 
 ###Use event delegation where ever possible 
+<<<<<<< HEAD
 Do not have multiple individual `click` events for one element - e.g. click event for every `<li>` in a un-ordered list.
+=======
+Do not have multiple individual `click` events for one element - e.g. click event for every `<li>` in a un-ordered list
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 ###Don't use jQuery's abstracted AJAX methods `post()` and `get()`
 Just use the `ajax()` method as it's clearer/more specific and allows error handler to be used.
@@ -837,9 +1049,12 @@ var list_items = test.find('.selected');
 
 ###In general...
 Avoid jQuery unless absolutely necessary.
+<<<<<<< HEAD
 
 ##ES5 (ECMAScript 5.0)
 
 Wherever possible use ES5 features because they are more advanced/efficient that older versions of JavaScript.
 
 IE9+ for desktop browsers, and most other browsers implement ES5 very well. For a full compatibility table can be [found here](http://kangax.github.io/es5-compat-table/). But make sure you feature detect any features before using them to ensure older browsers do not lose out.
+=======
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a

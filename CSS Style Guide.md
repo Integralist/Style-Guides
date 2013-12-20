@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 # CSS Style Guide
+=======
+#CSS Style Guide
+
+This is my own personal style guide for writing and managing CSS. 
+
+Feel free to take the bits you like and/or modify to your own style.
+
+Here is what we'll cover:
+>>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 - Summary
 - Terminology
