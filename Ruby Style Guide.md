@@ -10,7 +10,7 @@
 - Use `snake_case` for methods and variables.
 - Use `CamelCase` for classes and modules (Keep acronyms like HTTP, RFC, XML uppercase).
 - Use `SCREAMING_SNAKE_CASE` for other constants.
-- Use four spaces for indenting your code (do not use tabs).
+- Use two spaces for indenting your code (do not use tabs).
 - Restrict code to 80 characters per line.
 - Remove trailing whitespace.
 - Use spaces around operators, after commas, colons and semicolons, around `{` and before `}`.
