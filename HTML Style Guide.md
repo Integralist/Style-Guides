@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 # HTML Style Guide
-=======
-#HTML Style Guide
-
-This is my own personal style guide for writing HTML. 
-
-Feel free to take the bits you like and/or modify to your own style.
-
-Here is what we'll cover:
->>>>>>> 4b3390062afb4d83c953522108997311a781656a
 
 - Terminology
 - Document Object Model (DOM)
